@@ -5,8 +5,7 @@
 
 virtualenv/
 .venv/
-.virtualenv/
 env/
-venv/
+
 
 *.py[cod]
