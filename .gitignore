@@ -3,9 +3,10 @@
 
 .idea/
 
+
 virtualenv/
 .venv/
 env/
-
+venv/
 
 *.py[cod]
