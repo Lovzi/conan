@@ -83,7 +83,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': '',
-        'PORT': 3305,
+        'PORT': 3306,
         'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
@@ -126,3 +126,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )

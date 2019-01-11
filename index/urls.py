@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
-app_name = 'accounts'
+app_name = 'index'
 urlpatterns = [
-    path('login/', views.LoginView.as_view()),
+    path('', views.index),
 ]
