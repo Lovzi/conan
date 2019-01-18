@@ -1,22 +1,18 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-	<title>水平表单</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-</head>
-<body>
-<form class="form-horizontal" role="form">
+{% extends 'basic/base.html' %}
+
+{% block main %}
+<form class="form-horizontal" role="form" method="post" action="{% url 'accounts:login' %}">
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">邮箱</label>
+    <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
     <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail3" placeholder="请输入您的邮箱地址">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Username">
     </div>
   </div>
   <div class="form-group">
-    <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+    <label for="i
+nputPassword3" class="col-sm-2 control-label">密码</label>
     <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword3" placeholder="请输入您的邮箱密码">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
     </div>
   </div>
   <div class="form-group">
@@ -30,9 +26,8 @@
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">进入邮箱</button>
+      <button type="submit" class="btn btn-default">登陆</button>
     </div>
   </div>
 </form>
-</body>
-</html>
+{% endblock %}
