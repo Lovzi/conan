@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'index.apps.IndexConfig',
+    'contest.apps.ContestConfig',
+    'problem.apps.ProblemConfig',
+    'discuss.apps.DiscussConfig',
     'rest_framework',
 ]
 
@@ -82,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'letcode',
         'USER': 'root',
-        'PASSWORD': 'bamboo',
+        'PASSWORD': 'root',
         'HOST': '',
         'PORT': 3306,
         'OPTIONS': {'charset': 'utf8mb4'},

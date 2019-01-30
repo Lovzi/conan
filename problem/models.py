@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class problem(models.Model):
+class Problem(models.Model):
     title = models.CharField('题目', max_length=100, )
     content = models.TextField('描述')
     time_limited = models.IntegerField('时间限制', default=1000)
@@ -13,6 +13,7 @@ class problem(models.Model):
     in_case =  models.TextField('样例输入')
     out_case = models.TextField('样例输出')
     source = models.CharField('来源', max_length=50)
+    tip = models.TextField('提示')
     number_accepted = models.IntegerField('接受数量', default=0)
     number_commited = models.IntegerField('提交数量', default=0)
 
