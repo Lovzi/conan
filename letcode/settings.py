@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'letcode',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'bamboo',
         'HOST': '',
         'PORT': 3306,
         'OPTIONS': {'charset': 'utf8mb4'},

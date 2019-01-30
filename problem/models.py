@@ -13,6 +13,8 @@ class problem(models.Model):
     in_case =  models.TextField('样例输入')
     out_case = models.TextField('样例输出')
     source = models.CharField('来源', max_length=50)
+    number_accepted = models.IntegerField('接受数量', default=0)
+    number_commited = models.IntegerField('提交数量', default=0)
 
     class Meta:
         db_table = 'problem'
@@ -21,13 +23,19 @@ class problem(models.Model):
 
 
 class CommitRecord(models.Model):
-    pid = models.IntegerField()
+    pid = models.IntegerField('题目编号')
+    uid = models.IntegerField('用户编号')
+    status = models.BooleanField('状态')
+    result = models.CharField('结果', max_length=20)
+    cost_time = models.IntegerField('时间消耗')
+    cost_memory = models.IntegerField('内存消耗')
+    time_commited = models.DateField('提交时间', auto_now=True)
+    code = models.TextField('代码')
 
-    uid = models.IntegerField()
-
-    status = models.BooleanField()
-
-    code = models.TextField()
+    class Meta:
+        db_table = 'commit_record'
+        verbose_name = '提交记录'
+        verbose_name_plural = '提交记录'
 
 
 
