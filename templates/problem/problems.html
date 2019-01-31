@@ -1,0 +1,35 @@
+{% extends 'basic/base.html' %}
+
+{% block main %}
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-8">
+          <table class="table table-striped">
+        <tr>
+            <td></td>
+            <td><b>#</b></td>
+            <td><b>题目</b></td>
+            <td><b>解答</b></td>
+            <td><b>通过率</b></td>
+            <td><b>难度</b></td>
+        </tr>
+        {% for problem in problem_list %}
+            <tr>
+                {% if problem_list %}
+                    <td></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td>{{ problem.id }}</td>
+                <td><a>{{ problem.title }}</a></td>
+                <td>#</td>
+                <td>100%</td>
+                <td>{{ problem.rank }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+  </div>
+  <div class="col-md-3">.col-md-1</div>
+</div>
+
+{% endblock %}

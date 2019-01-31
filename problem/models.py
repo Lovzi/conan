@@ -14,8 +14,7 @@ class Problem(models.Model):
     out_case = models.TextField('样例输出')
     source = models.CharField('来源', max_length=50)
     tip = models.TextField('提示')
-    number_accepted = models.IntegerField('接受数量', default=0)
-    number_commited = models.IntegerField('提交数量', default=0)
+
 
     class Meta:
         db_table = 'problem'
@@ -39,4 +38,8 @@ class CommitRecord(models.Model):
         verbose_name_plural = '提交记录'
 
 
+class ProblemCatagory(models.Model):
+    category_name = models.CharField(max_length=10)
 
+    class Meta:
+        db_table = 'problem_catagory'

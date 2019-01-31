@@ -33,16 +33,15 @@
               <ul class="nav navbar-nav">
                 <li class="active"><a href="#">题库 <span class="sr-only">(current)</span></a></li>
                 <li><a href="#">竞赛</a></li>
+                <li><a href="#">社区</a></li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">社区 <span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">探索 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
+                    <li><a href="#">专题训练</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">随机开始</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
+                    <li><a href="">排行榜</a></li>
                   </ul>
                 </li>
               </ul>
@@ -69,6 +68,11 @@
           </div><!-- /.container-fluid -->
         </nav>
         {% block main %}
+            <div class="jumbotron">
+              <h1>Hello, world!</h1>
+              <p>...</p>
+              <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+            </div>
         {% endblock %}
         <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
         <script src="https://www.imooc.com/static/lib/jquery/1.9.1/jquery.js"></script>

@@ -17,6 +17,7 @@ class User(AbstractUser):
     last_login = models.DateField(verbose_name='最近登录', default=now)
     skill = models.CharField(verbose_name='技能', max_length=100, blank=True)
     last_mod_time = models.DateTimeField('修改时间', default=now)
+    # grade = model
 
 
     class Meta:
