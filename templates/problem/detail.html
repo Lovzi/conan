@@ -2,30 +2,103 @@
 
 {% block main %}
 <div class="row">
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1"></div>
+  <div class="col-md-7">
+{#    <div>#}
+{#      <nav class="navbar navbar-default">#}
+{#        <div class="container-fluid">#}
+{#          <div class="navbar-header">#}
+{#            <h1 class="navbar-brand" href="#">#}
+{#                {{ problem.id }}.{{ problem.title }}#}
+{#            </h1>#}
+{#          </div>#}
+{#        </div>#}
+{#      </nav>#}
+{#    </div>#}
+    <div class="page-header">
+        <h1>{{ problem.id }}.{{ problem.title }}</h1>
+    </div>
+    <div>
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="#">问题描述</a></li>
+        <li role="presentation"><a href="#">解决方案</a></li>
+        <li role="presentation"><a href="#">问题讨论</a></li>
+        <li role="presentation"><a href="#">提交记录</a></li>
+      </ul>
+    </div>
+    <div class="problem-description">
+        <div class="panel panel-info">
+          <div class="panel-heading">问题描述</div>
+          <div class="panel-body">
+            {{ problem.content }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输入</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.in_description }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输出</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.out_description }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输入样例</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.in_case }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输出样例</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.out_case }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">提示</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.tip }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">来源</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.source }}
+          </div>
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Code</h3>
+          </div>
+          <div class="panel-body">
+            <form role="form">
+              <div class="form-group">
+                <textarea class="form-control" rows="25"></textarea>
+                <button class="submit btn btn-primary" type="button">提交</button>
+            </div>
+            </form>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-2">.col-md-8</div>
+  <div class="col-md-1"></div>
 </div>
-<div class="row">
-  <div class="col-md-8">.col-md-8</div>
-  <div class="col-md-4">.col-md-4</div>
-</div>
-<div class="row">
-  <div class="col-md-4">.col-md-4</div>
-  <div class="col-md-4">.col-md-4</div>
-  <div class="col-md-4">.col-md-4</div>
-</div>
-<div class="row">
-  <div class="col-md-6">.col-md-6</div>
-  <div class="col-md-6">.col-md-6</div>
-</div>
+
+
 {% endblock %}
