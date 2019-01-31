@@ -25,7 +25,7 @@ SECRET_KEY = '1y^c6u!i^ejzmnm9%o8yi%nb4#!vxy!s*yjduzxn^e@!8hxdyj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,8 +85,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'letcode',
         'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '',
+        'PASSWORD': 'bamboo',
+        'HOST': '39.96.194.42',
         'PORT': 3306,
         'OPTIONS': {'charset': 'utf8mb4'},
     }
