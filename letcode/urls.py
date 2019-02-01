@@ -23,5 +23,7 @@ urlpatterns = [
     path(r'admin/', admin.site.urls),
     path(r'accounts/', include('accounts.urls', namespace='accounts')),
     path(r'problems/', include('problem.urls', namespace='problems')),
+    path(r'contest/', include('contest.urls', namespace='contest')),
+    path(r'explore/', include('explore.urls', namespace='explore')),
 ]
 

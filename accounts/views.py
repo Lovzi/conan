@@ -1,5 +1,5 @@
 from django.contrib import auth
-from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth import REDIRECT_FIELD_NAME, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -37,20 +37,16 @@ class LoginView(FormView):
     def form_valid(self, form):
         form = AuthenticationForm(data=self.request.POST, request=self.request)
 
-        # if form.is_valid():
-        #     from DjangoBlog.utils import cache
-        #     if cache and cache is not None:
-        #         cache.clear()
-        #     print(self.redirect_field_name)
-        #     redirect_to = self.request.GET.get(self.redirect_field_name)
-        #     auth.login(self.request, form.get_user())
-        #     return super(LoginView, self).form_valid(form)
-        #     # return HttpResponseRedirect('/')
-        # else:
-        #     return self.render_to_response({
-        #         'form': form
-        #     })
-        return HttpResponseRedirect('/')
+        if form.is_valid():
+            print(self.redirect_field_name)
+            redirect_to = self.request.GET.get(self.redirect_field_name)
+            auth.login(self.request, form.get_user())
+            return super(LoginView, self).form_valid(form)
+        else:
+            return self.render_to_response({
+                'form': form
+            })
+
 
     def get_success_url(self):
 
@@ -72,14 +68,16 @@ class RegisterView(FormView):
 
 
 class LogoutView(RedirectView):
-    url = '/login/'
+    url = '/'
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
         return super(LogoutView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        from DjangoBlog.utils import cache
-        cache.clear()
         logout(request)
         return super(LogoutView, self).get(request, *args, **kwargs)
+
+
+class ProfileView(FormView):
+    template_name = 'accounts/profile.html'

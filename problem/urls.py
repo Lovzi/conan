@@ -6,5 +6,6 @@ app_name = 'problem'
 urlpatterns = [
     path(r'', views.ProblemListView.as_view(), name='problems_lst'),
     path(r'<int:id>', views.ProblemDetailView.as_view(), name='problems_detail'),
+    path(r'answer/', views.AnswerView.as_view(), name='answer'),
 ]
 

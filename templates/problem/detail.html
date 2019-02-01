@@ -1,5 +1,9 @@
 {% extends 'basic/base.html' %}
+{% load static %}
 
+{% block head %}
+    <title>{{ problem.title }}</title>
+{% endblock %}
 {% block main %}
 <div class="row">
   <div class="col-md-1"></div>
@@ -15,6 +19,7 @@
 {#        </div>#}
 {#      </nav>#}
 {#    </div>#}
+
     <div class="page-header">
         <h1>{{ problem.id }}.{{ problem.title }}</h1>
     </div>
@@ -86,10 +91,10 @@
             <h3 class="panel-title">Code</h3>
           </div>
           <div class="panel-body">
-            <form role="form">
+            <form role="form" class="code-form" action="/problem/answer">{% csrf_token %}
               <div class="form-group">
-                <textarea class="form-control" rows="25"></textarea>
-                <button class="submit btn btn-primary" type="button">提交</button>
+                <textarea data-problemId="{{ problem.id }}" class="form-control code-editor" rows="25"></textarea>
+                <button class="btn btn-primary code-submit" type="button">提交</button>
             </div>
             </form>
           </div>
@@ -100,5 +105,8 @@
   <div class="col-md-1"></div>
 </div>
 
-
+{% block bottom %}
+    <script src="https://www.imooc.com/static/lib/jquery/1.9.1/jquery.js"></script>
+    <script src="{% static 'js/problems.js' %}"></script>
+{% endblock %}
 {% endblock %}

@@ -42,14 +42,14 @@ INSTALLED_APPS = [
     'contest.apps.ContestConfig',
     'problem.apps.ProblemConfig',
     'discuss.apps.DiscussConfig',
-    'rest_framework',
+    'explore.apps.ExploreConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
