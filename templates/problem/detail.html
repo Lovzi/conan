@@ -3,6 +3,7 @@
 
 {% block head %}
     <title>{{ problem.title }}</title>
+    <link rel="stylesheet" href="/static/css/problem_detail.css">
 {% endblock %}
 {% block main %}
 <div class="row">
@@ -59,7 +60,7 @@
             <h3 class="panel-title">输入样例</h3>
           </div>
           <div class="panel-body">
-            {{ problem.in_case }}
+            <pre>{{ problem.in_case }}</pre>
           </div>
         </div>
         <div class="panel panel-info">
@@ -67,7 +68,7 @@
             <h3 class="panel-title">输出样例</h3>
           </div>
           <div class="panel-body">
-            {{ problem.out_case }}
+            <pre>{{ problem.out_case }}</pre>
           </div>
         </div>
         <div class="panel panel-info">
@@ -88,7 +89,20 @@
         </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Code</h3>
+            <h3 class="panel-title code-header">Code</h3>
+              <div class="dropdown code-language">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Dropdown
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </div>
           </div>
           <div class="panel-body">
             <form role="form" class="code-form" action="/problem/answer">{% csrf_token %}

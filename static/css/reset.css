@@ -6,3 +6,9 @@
     margin-top: 15px;
     float: right;
 }
+
+.min-mugshot{
+    border-radius:2px;
+    width: 24px;
+    display: inline;
+}

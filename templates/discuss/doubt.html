@@ -1,0 +1,56 @@
+{% extends 'basic/base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>社区-letcode</title>
+    <link rel="stylesheet" href="/static/css/doubt.css">
+{% endblock %}
+{% block main %}
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-6">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                综合讨论
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <ul class="nav nav-pills">
+                  <li role="presentation" class="active"><a href="#">最新</a></li>
+                  <li role="presentation"><a href="#">最热</a></li>
+                </ul>
+              </div>
+              <div class="doubt-list">
+                  <ul class="list-group">
+                      <li class="list-group-item">
+                          <div class="row">
+                              <div class="col-md-1">
+                                <img class="doubt-mugshot" src="/static/upload/mugshots/default.jpg">
+                              </div>
+                              <div class="col-md-10 doubt-synopsis">
+                                <h4>参加竞赛怎样才能在自己名字后面显示国旗啊？</h4>
+                                  <span>茶未凉</span>
+                                  <span>2018.12.13.12.12</span>
+                              </div>
+                              <div class="col-md-1">
+
+                              </div>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-2">.col-md-4</div>
+  <div class="col-md-2"></div>
+</div>
+{% endblock %}

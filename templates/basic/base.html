@@ -36,7 +36,7 @@
               <ul class="nav navbar-nav">
                 <li class="active"><a href="/problems/">题库<span class="sr-only">(current)</span></a></li>
                 <li><a href="/contest/">竞赛</a></li>
-                <li><a href="/discuss">社区</a></li>
+                <li><a href="/discuss/">社区</a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">探索 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -58,17 +58,20 @@
                 {% if user.id %}
                     <li><a href="{% url 'accounts:login' %}">{{ user.username }}</a></li>
                 {% else %}
-                    <li><a href="{% url 'accounts:login' %}">登陆</a></li>
+                    <li><a href="{% url 'accounts:login' %}">登录</a></li>
                 {% endif %}
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">答题记录</a></li>
-                    <li><a href="#">设置</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="/accounts/logout/">退出</a></li>
-                  </ul>
+                    {% if user.id %}
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="img-rounded img-responsive min-mugshot" src="/{{ user.mugshot }}"><span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="/accounts/profile/">账号设置</a></li>
+                        <li><a href="/problem/">提交记录</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/accounts/logout/">退出登录</a></li>
+                      </ul>
+                    {% else %}
+                      <li><a href="{% url 'accounts:register' %}">注册</a></li>
+                    {% endif %}
                 </li>
               </ul>
             </div><!-- /.navbar-collapse -->

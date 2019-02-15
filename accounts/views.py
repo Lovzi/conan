@@ -1,16 +1,19 @@
 from django.contrib import auth
 from django.contrib.auth import REDIRECT_FIELD_NAME, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.http import is_safe_url
+from django.views import View
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic import FormView, RedirectView
+from django.views.generic import FormView, RedirectView, TemplateView
+from rest_framework.generics import RetrieveUpdateAPIView, UpdateAPIView
 
 from accounts.forms import RegisterForm, LoginForm
+from accounts.models import User
 
 
 class LoginView(FormView):
@@ -79,5 +82,17 @@ class LogoutView(RedirectView):
         return super(LogoutView, self).get(request, *args, **kwargs)
 
 
-class ProfileView(FormView):
+class ProfileView(TemplateView):
     template_name = 'accounts/profile.html'
+
+
+class ProfileUpdateView(View):
+    def post(self, request, *args, **kwargs):
+        params = {'id': request.user.id}
+        params.update(request.POST)
+        print(params)
+
+# class ProfileUpdateView(UpdateAPIView):
+#     def update(self, request, *args, **kwargs):
+
+

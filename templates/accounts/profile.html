@@ -1,0 +1,98 @@
+{% extends 'basic/base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+{% endblock %}
+{% block main %}
+<div class="jumbotron profile-top-bg">
+{#  <div class="profile-top container">#}
+      <div class="row mugshot-username">
+          <div class="col-md-2"></div>
+          <div class="col-md-2"><img src="{% static 'upload/mugshots/default.jpg' %}" alt="..." class="img-rounded img-responsive center-block" style="border-radius:15px;background-color: transparent;box-shadow:0px 0px 8px 5px #ccc;"></div>
+          <div class="name-eamil col-md-6">
+              <h2>{{ user.username }}</h2>
+              <span>{{ user.email }}</span>
+          </div>
+          <div class="col-md-2"></div>
+      </div>
+{#  </div>#}
+</div>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="profile-nav-panel col-md-2">
+          <a href="#" class="profile-nav list-group-item active ">
+            <h4 class="list-group-item-heading">基本信息</h4>
+          </a>
+          <a href="#" class="profile-nav list-group-item">
+            <h4 class="list-group-item-heading">账号设置</h4>
+          </a>
+          <a href="#" class="profile-nav list-group-item">
+            <h4 class="list-group-item-heading">提交记录</h4>
+          </a>
+          <a href="#" class="profile-nav list-group-item">
+            <h4 class="list-group-item-heading">竞赛成绩</h4>
+          </a>
+  </div>
+  <div class="col-md-6">
+    <div class="profile-panel panel panel-default">
+      <!-- Default panel contents -->
+        <h4 class="panel-heading profile-panel-header personal-info" style="background-color: #fff">个人档案</h4>
+        <table class="table">
+            <tr class="row profile-row">
+                <td class="col-md-2">昵称</td>
+                <td class="col-md-9 td-profile-nickname">{{ user.username }}</td>
+                <td class="col-md-1"><a class="profile-editor" href="#" data-field="nickname">编辑</a></td>
+            </tr>
+            <tr class="row profile-row">
+                <td class="col-md-2">性别</td>
+                <td class="col-md-9 td-profile-sex">{{ user.username }}</td>
+                <td class="col-md-1"><a class="profile-editor" href="#" data-field="sex">编辑</a></td>
+            </tr>
+            <tr class="row profile-row">
+                <td class="col-md-2">生日</td>
+                <td class="col-md-9 td-profile-birthday">{{ user.username }}</td>
+                <td class="col-md-1"><a class="profile-editor" href="#" data-field="birthday">编辑</a></td>
+            </tr>
+            <tr class="row profile-row">
+                <td class="col-md-2">所在学院</td>
+                <td class="col-md-9 td-profile-department" >{{ user.username }}</td>
+                <td class="col-md-1"><a class="profile-editor" href="#" data-field="department">编辑</a></td>
+            </tr>
+            <tr class="row profile-row">
+                <td class="col-md-2">个人介绍</td>
+                <td class="col-md-9 td-profile-introduce" >{{ user.username }}</td>
+                <td class="col-md-1"><a class="profile-editor" href="#" data-field="introduce">编辑</a></td>
+            </tr>
+            <tr class="row profile-row">
+                <td class="col-md-2">博客</td>
+                <td class="col-md-9 td-profile-blog">{{ user.blog }}</td>
+                <td class="col-md-1"><a class="profile-editor" href="#" data-field="blog">编辑</a></td>
+            </tr>
+        </table>
+        <h4 class="profile-panel-header panel-heading " style="background-color: #fff">专业技能</h4>
+        <table class="table">
+           <tr class="row profile-row">
+                <td class="col-md-2">专业技能</td>
+                <td class="col-md-9 td-profile-skill">{{ user.username }}</td>
+                <td class="col-md-1"><a class="profile-editor" href="#" data-field="skill">编辑</a></td>
+           </tr>
+        </table>
+        <h4 class="panel-heading profile-panel-header" style="background-color: #fff">斩获佳绩</h4>
+        <table class="table">
+            <tr class="row profile-row">
+                <td class="col-md-2">荣誉</td>
+                <td class="col-md-10">{{ user.username }}</td>
+            </tr>
+        </table>
+      </div>
+
+      <!-- List group -->
+  </div>
+  <div class="col-md-2"></div>
+</div>
+{% endblock %}
+
+{% block bottom %}
+    <script src="https://www.imooc.com/static/lib/jquery/1.9.1/jquery.js"></script>
+    <script src="{% static 'js/profile.js' %}"></script>
+{% endblock %}

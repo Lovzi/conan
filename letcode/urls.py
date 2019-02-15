@@ -25,5 +25,6 @@ urlpatterns = [
     path(r'problems/', include('problem.urls', namespace='problems')),
     path(r'contest/', include('contest.urls', namespace='contest')),
     path(r'explore/', include('explore.urls', namespace='explore')),
+    path(r'discuss/', include('discuss.urls', namespace='discuss'))
 ]
 

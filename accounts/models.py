@@ -6,9 +6,11 @@ from django.utils.timezone import now
 class User(AbstractUser):
     # username = models.CharField(verbose_name='用户名',max_length=40, unique=True)
     # password = models.CharField(verbose_name='密码', max_length=40, default="12345678")
-    mugshot = models.ImageField('头像', upload_to='upload/mugshots', blank=True)
+    mugshot = models.ImageField('头像',
+                                upload_to='upload/mugshots',
+                                default="/static/upload/mugshots/default.jpg")
     phone = models.CharField(verbose_name='手机号', max_length=12, blank=True)
-    nickname = models.CharField(verbose_name='姓名', max_length=20, blank=True)
+    nickname = models.CharField(verbose_name='昵称', max_length=20, blank=True)
     department = models.CharField(verbose_name='所在学院', max_length=20, blank=True)
     sex = models.CharField(verbose_name='性别', max_length=2, blank=True)
     birthday = models.DateField(verbose_name='生日', blank=True, null=True)
