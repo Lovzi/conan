@@ -10,3 +10,4 @@ class DoubtDetailView(DetailView):
 
 class DoubtListView(TemplateView):
     template_name = 'discuss/doubt.html'
+

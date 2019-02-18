@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.timezone import now
 
 from letcode import settings
-from utils.base_models import Comment
+
 # Create your models here.
 
 class Doubt(models.Model):
@@ -20,14 +20,5 @@ class Doubt(models.Model):
         ordering = ['-created_time']
 
 
-
-class DoubtComments(Comment):
-    doubt = models.ForeignKey(Doubt, verbose_name='帖子', on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'doubt_comments'
-        verbose_name = '帖子评论'
-        verbose_name_plural = '帖子评论'
-        ordering = ['-created_time']
 
 

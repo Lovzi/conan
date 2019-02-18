@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'problem.apps.ProblemConfig',
     'discuss.apps.DiscussConfig',
     'explore.apps.ExploreConfig',
-    'utils'
+    'comments.apps.CommentsConfig'
 ]
 
 MIDDLEWARE = [
