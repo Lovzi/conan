@@ -4,3 +4,23 @@
 .code-header{
     display: inline;
 }
+.comment-mugshot{
+    float: left;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+.comment-username{
+    float: left;
+    margin-top: 5px;
+    margin-left: 8px;
+}
+.comment-created-time{
+    display: block;
+    float: right;
+    margin-top: 8px;
+}
+.comment-body{
+    padding-bottom: 1em;
+
+}

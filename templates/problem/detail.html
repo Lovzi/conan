@@ -20,19 +20,20 @@
 {#        </div>#}
 {#      </nav>#}
 {#    </div>#}
-
     <div class="page-header">
+        <p hidden class="data-problem-id" data-problem-id="{{ problem.id }}"></p>
         <h1>{{ problem.id }}.{{ problem.title }}</h1>
     </div>
     <div>
       <ul class="nav nav-tabs">
         <li role="presentation" class="active"><a href="#">问题描述</a></li>
         <li role="presentation"><a href="#">解决方案</a></li>
-        <li role="presentation"><a href="#">问题讨论</a></li>
+        <li role="presentation"><a href="#" class="problem-comments">问题讨论</a></li>
         <li role="presentation"><a href="#">提交记录</a></li>
       </ul>
     </div>
-    <div class="problem-description">
+    <div class="problem-container">
+        <div class="problem-description">
         <div class="panel panel-info">
           <div class="panel-heading">问题描述</div>
           <div class="panel-body">
@@ -114,13 +115,17 @@
           </div>
         </div>
     </div>
+    </div>
   </div>
   <div class="col-md-2">.col-md-8</div>
   <div class="col-md-1"></div>
 </div>
 
+
+{% endblock %}
+
 {% block bottom %}
     <script src="https://www.imooc.com/static/lib/jquery/1.9.1/jquery.js"></script>
     <script src="{% static 'js/problems.js' %}"></script>
-{% endblock %}
+    <script src="{% static 'js/problem_detail.js' %}"></script>
 {% endblock %}

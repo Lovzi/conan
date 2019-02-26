@@ -1,0 +1,73 @@
+<div class="panel-body">
+    <form role="form" class="comment-form" action="">{% csrf_token %}
+      <div class="form-group">
+        <textarea class="form-control comment-editor" rows="5"></textarea>
+        <button class="btn btn-primary submit-comment" data-type="master" type="button">评论</button>
+    </div>
+    </form>
+</div>
+<div class="comment">
+    {% for comment in comments %}
+        <div class="singer-comment-container" id="{{ comment.id }}" data-parent-comment-id="{{ comment.id }}" data-star="{{ comment.star }}" data-replied-id="{{ comment.author.id }}" >
+            <div class="row">
+                <div class="col-md-12">
+                    <img class="comment-mugshot" src="{{ comment.author.mugshot }}">
+                    <p class="comment-username">{{ comment.author.username }}</p>
+                    <p class="comment-created-time">{{ comment.created_time }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="comment-body">{{ comment.body }}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary problem-comment-star">点赞:{{ comment.star }}</button>
+                    <button class="btn btn-primary reply-cls-btn" data-parent-comment-id="">回复</button>
+                    <button class="btn btn-primary">分享</button>
+                    <button class="btn btn-primary" >举报</button>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12 reply-input-container-{{ comment.id }}">
+                     sdfdf
+                </div>
+            </div>
+            <div class="children-comments">
+                {% for c in comment.children_comments.all %}
+                    <div class="row singer-comment-container" id="{{ c.id }}" data-parent-comment-id="{{ comment.id }}" data-star="{{ comment.star }}" data-replied-id="{{ comment.author.id }}" >
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img class="comment-mugshot" src="{{ c.author.mugshot }}">
+                                    <p class="comment-username">{{ c.author.username }}</p>
+                                    <p class="comment-created-time">{{ c.created_time }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="comment-body">{{ c.body }}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary problem-comment-star">点赞:{{ c.star }}</button>
+                                    <button class="btn btn-primary reply-cls-btn" data-parent-comment-id="">回复</button>
+                                    <button class="btn btn-primary">分享</button>
+                                    <button class="btn btn-primary" >举报</button>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-md-12 reply-input-container-{{ c.id }}">
+                                     sdfdf
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>

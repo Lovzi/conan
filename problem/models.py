@@ -1,6 +1,10 @@
 from django.db import models
 
 # Create your models here.
+from django.utils.timezone import now
+
+from letcode import settings
+
 
 class Problem(models.Model):
     title = models.CharField('题目', max_length=100, )
@@ -43,3 +47,31 @@ class ProblemCatagory(models.Model):
 
     class Meta:
         db_table = 'problem_catagory'
+
+
+class ProblemComment(models.Model):
+    body = models.TextField('正文')
+    created_time = models.DateTimeField('创建时间', default=now)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者', related_name='problem_comment_set' , on_delete=models.CASCADE)
+    reply = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='回复',null=True, blank=True, related_name='problem_commented_set', on_delete=models.CASCADE)
+    parent_comment = models.ForeignKey('self', verbose_name="上级评论",related_name="children_comments", blank=True, null=True, on_delete=models.CASCADE)
+    is_enable = models.BooleanField('是否显示', default=True)
+    problem = models.ForeignKey('Problem', verbose_name='问题', on_delete=models.CASCADE)
+    star = models.IntegerField('点赞', default=0)
+    is_problem_comment = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = 'problem_comment'
+        ordering = ['-created_time']
+        verbose_name = "评论"
+        verbose_name_plural = verbose_name
+        get_latest_by = 'created_time'
+
+    def __str__(self):
+        return self.body
+
+    def serializer(self, field_name):
+        return self.__dict__
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
