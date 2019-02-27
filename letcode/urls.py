@@ -19,7 +19,7 @@ from django.conf.urls import include
 from accounts import views
 
 urlpatterns = [
-    path(r'', include('common.urls', namespace='index')),
+    path(r'', include('common.urls', namespace='common')),
     path(r'admin/', admin.site.urls),
     path(r'accounts/', include('accounts.urls', namespace='accounts')),
     path(r'problems/', include('problem.urls', namespace='problems')),

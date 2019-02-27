@@ -1,4 +1,4 @@
-$.ready(function () {
+$().ready(function () {
     $('.code-submit').click(function () {
         editor = $('.code-editor');
         problemId = editor.data('problemId');
@@ -6,7 +6,7 @@ $.ready(function () {
         alert(problemId)
         $.ajax({
             type: "POST",
-            url: "/problems/answer/",
+            url: "/problems/answer/python/",
             traditional:true,
             data: {'code': code, 'problem_id': problemId, 'user_id':'1'},
             success: function(res) {

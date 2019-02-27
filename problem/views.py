@@ -1,10 +1,11 @@
 import json
 import math
 
-from django.http import HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse, QueryDict, HttpResponse
 from django.shortcuts import render
 from django.template import loader
 from django.views.generic import ListView, DetailView, CreateView
+
 
 from accounts.models import User
 from problem.models import Problem, ProblemComment
@@ -13,7 +14,7 @@ from utils.paginator import ProblemPaginator
 
 class ProblemListView(ListView):
     template_name = 'problem/problems.html'
-    context_object_name = 'problem_lst'
+    context_object_name = 'problems'
     queryset = Problem.objects.all()
     PAGE_LIMITED = 50
 
@@ -41,7 +42,11 @@ class ProblemDetailView(DetailView):
 
 class AnswerView(CreateView):
     def post(self, request, *args, **kwargs):
-        data = request.POST
+        code = request.POST.get('code')
+        print(code)
+        response = exec(code)
+        print(response)
+        return HttpResponse(response)
 
 
 class ProblemCommentView(ListView):
@@ -82,17 +87,18 @@ class ProblemCommentView(ListView):
         return JsonResponse(data)
 
     def put(self, request, *args, **kwargs):
-        try:
-            comment = self.queryset.get(id=self.kwargs['id'])
-            print(comment.star)
-            comment.star += 1
-            comment.save()
-            star = comment.star
-            data = {'code': 0, 'content': star}
-        except Exception as e:
-            print(e)
-            data = {'code': -1, 'content': '评论不能为空'}
-            return JsonResponse(data)
+        # try:
+        put_dict= QueryDict(self.request.body)
+        comment_id = put_dict.get('id')
+        print(type(comment_id), comment_id)
+        comment = self.queryset.get(id=comment_id)
+        comment.star += 1
+        comment.save()
+        data = {'code': 0, 'content': comment.star}
+        # except Exception as e:
+        #     print(e)
+        #     data = {'code': -1, 'content': '异常'}
+        #     return JsonResponse(data)
         return JsonResponse(data)
 
     def get_queryset(self):

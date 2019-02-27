@@ -48,7 +48,7 @@ $().off().ready(function () {
             var repliedId = commentObj.data('replied-id')
             var parentCommentId = commentObj.data('parent-comment-id');
         }
-        let textArea = obj.prev()
+        let textArea = obj.prev();
         //alert(document.cookie)
         //if(document.cookie.indexOf('sessionid') !== -1)
         let problemId = $('.data-problem-id').data('problem-id');
@@ -59,14 +59,12 @@ $().off().ready(function () {
                 alert('评论不能为空')
             }
             else{
-                $.ajax({
-                    type: 'POST',
-                    url: '/problems/'+ problemId + '/comments/',
-                    traditional:true,
-                    data: {'comment': commentComtent , 'problem_id': problemId, 'user_id': userId, 'replied_id':　repliedId, 'parent_comment_id': parentCommentId},
-                    success: function(res) {
+                url = '/problems/' + problemId + '/comments/'
+                $.post(
+                    url,
+                    {'comment': commentComtent , 'problem_id': problemId, 'user_id': userId, 'replied_id':　repliedId, 'parent_comment_id': parentCommentId},
+                    function(res) {
                         $('.problem-container').html(res['content'])
-                    }
                 })
             }
         }else{
@@ -79,13 +77,9 @@ $().off().ready(function () {
 
     $('.problem-comments').click(function () {
         let problemId = $('.data-problem-id').data('problem-id');
-        $.ajax({
-         type: 'GET',
-         url: '/problems/' + problemId + '/comments/',
-         traditional: true,
-         success: function (res) {
+        url = '/problems/' + problemId + '/comments/'
+        $.get(url, {}, function (res) {
              $('.problem-container').html(res['content'])
-         }
         })
     })
 
@@ -107,17 +101,13 @@ $().off().ready(function () {
     })
 
     $('.problem-container').on('click', '.problem-comment-star', function (event) {
-         let obj = event.target || window.event.target
-         let problemId = $('.data-problem-id').data('problem-id');
-         let commentId = $(obj).parents('.singer-comment-container').attr('id')
-         $.ajax({
-             type: 'PUT',
-             url: '/problems/' + problemId + '/comments/',
-             traditional: true,
-             data: {'id':commentId},
-             success: function (res) {
-                 $(obj).html(res['content'])
-             }
-         })
+        let obj = event.target || window.event.target
+        let problemId = $('.data-problem-id').data('problem-id');
+        let commentId = $(obj).parents('.singer-comment-container').attr('id')
+        alert(commentId)
+        let url = '/problems/' + problemId + '/comments/';
+        $.put(url, {'id': commentId}, function (res) {
+            $(obj).html(res['content'])
+        })
     })
 });
