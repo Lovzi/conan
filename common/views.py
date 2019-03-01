@@ -1,8 +1,9 @@
-from django.shortcuts import render
+
 
 # Create your views here.
 from django.views.generic import TemplateView, ListView
 
+from common.models import Tag
 from problem.models import Problem
 from problem.views import ProblemListView
 from utils.paginator import ProblemPaginator
@@ -10,6 +11,11 @@ from utils.paginator import ProblemPaginator
 
 class IndexView(TemplateView):
     template_name = 'index/index.html'
+    def get_context_data(self, **kwargs):
+        p = Tag(name='d')
+        p.save()
+        print(p.id)
+        return super().get_context_data()
 
 
 class SearchView(ListView):

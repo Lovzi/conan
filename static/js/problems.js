@@ -2,16 +2,13 @@ $().ready(function () {
     $('.code-submit').click(function () {
         editor = $('.code-editor');
         problemId = editor.data('problemId');
+        alert('sdfsdf')
+        alert(problemId)
         code = editor.val()
         alert(problemId)
-        $.ajax({
-            type: "POST",
-            url: "/problems/answer/python/",
-            traditional:true,
-            data: {'code': code, 'problem_id': problemId, 'user_id':'1'},
-            success: function(res) {
-                alert(res)
-            }
+        let url = "/problems/answer/python/"
+        $.post(url, {'code': code, 'problem_id': problemId, 'user_id':'1'}, function(res) {
+            alert(res)
         });
     });
 

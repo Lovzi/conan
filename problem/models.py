@@ -29,11 +29,11 @@ class Problem(models.Model):
 class CommitRecord(models.Model):
     pid = models.IntegerField('题目编号')
     uid = models.IntegerField('用户编号')
-    status = models.BooleanField('状态')
-    result = models.CharField('结果', max_length=20)
-    cost_time = models.IntegerField('时间消耗')
-    cost_memory = models.IntegerField('内存消耗')
-    time_commited = models.DateField('提交时间', auto_now=True)
+    status = models.BooleanField('状态',default=False)
+    result = models.CharField('结果', max_length=20, default="")
+    cost_time = models.IntegerField('时间消耗', default=-1)
+    cost_memory = models.IntegerField('内存消耗', default=-1)
+    created_time = models.DateField('提交时间', auto_now=True)
     code = models.TextField('代码')
 
     class Meta:
@@ -41,12 +41,20 @@ class CommitRecord(models.Model):
         verbose_name = '提交记录'
         verbose_name_plural = '提交记录'
 
+    # def serializer(self):
+    #     return {
+    #         'pid': self.pid,
+    #         'uid': self.uid,
+    #         'status': self.status,
+    #         'result': self.result,
+    #         'cost_time': self.cost_time,
+    #         'cost_memory': self.cost_memory,
+    #         'created_time': self.created_time,
+    #         'code': self.code
+    #     }
+    def serializer(self, field_name):
+        return self.__dict__
 
-class ProblemCatagory(models.Model):
-    category_name = models.CharField(max_length=10)
-
-    class Meta:
-        db_table = 'problem_catagory'
 
 
 class ProblemComment(models.Model):

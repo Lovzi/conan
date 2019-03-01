@@ -1,14 +1,16 @@
 import json
 import math
+import requests
 
 from django.http import HttpResponseBadRequest, JsonResponse, QueryDict, HttpResponse
 from django.shortcuts import render
 from django.template import loader
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView
 
 
 from accounts.models import User
-from problem.models import Problem, ProblemComment
+from problem.models import Problem, ProblemComment, CommitRecord
 from utils.paginator import ProblemPaginator
 
 
@@ -40,13 +42,17 @@ class ProblemDetailView(DetailView):
     pk_url_kwarg = 'id'
 
 
-class AnswerView(CreateView):
+class AnswerView(View):
     def post(self, request, *args, **kwargs):
         code = request.POST.get('code')
-        print(code)
-        response = exec(code)
-        print(response)
-        return HttpResponse(response)
+        problem_id = self.request.POST.get('problem_id')
+        commit = CommitRecord(code=code,pid=problem_id, uid=request.user.id)
+        url = "http://39.96.194.42:5000/python/"
+        res = requests.post(url=url, data=json.dumps(commit, default=commit.serializer))
+        print(commit.__dict__)
+        return JsonResponse(res.content)
+
+
 
 
 class ProblemCommentView(ListView):
