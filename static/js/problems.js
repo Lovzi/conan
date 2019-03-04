@@ -1,12 +1,10 @@
 $().ready(function () {
     $('.code-submit').click(function () {
-        editor = $('.code-editor');
-        problemId = editor.data('problemId');
-        alert('sdfsdf')
+        let editor = $('.code-editor');
+        let problemId = $('.data-problem-id').data('problem-id');
+        let code = editor.val()
         alert(problemId)
-        code = editor.val()
-        alert(problemId)
-        let url = "/problems/answer/python/"
+        let url = "/problems/answer/g++/"
         $.post(url, {'code': code, 'problem_id': problemId, 'user_id':'1'}, function(res) {
             alert(res)
         });

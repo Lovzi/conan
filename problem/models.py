@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 
 # Create your models here.
@@ -14,7 +16,7 @@ class Problem(models.Model):
     rank = models.IntegerField('等级')
     in_description = models.TextField('输入描述')
     out_description = models.TextField('输出描述')
-    in_case =  models.TextField('样例输入')
+    in_case = models.TextField('样例输入')
     out_case = models.TextField('样例输出')
     source = models.CharField('来源', max_length=50)
     tip = models.TextField('提示')
@@ -41,19 +43,17 @@ class CommitRecord(models.Model):
         verbose_name = '提交记录'
         verbose_name_plural = '提交记录'
 
-    # def serializer(self):
-    #     return {
-    #         'pid': self.pid,
-    #         'uid': self.uid,
-    #         'status': self.status,
-    #         'result': self.result,
-    #         'cost_time': self.cost_time,
-    #         'cost_memory': self.cost_memory,
-    #         'created_time': self.created_time,
-    #         'code': self.code
-    #     }
-    def serializer(self, field_name):
-        return self.__dict__
+    def serializer(self):
+        return {
+            'problem_id': self.pid,
+            'user_id': self.uid,
+            'status': self.status,
+            'result': self.result,
+            'cost_time': self.cost_time,
+            'cost_memory': self.cost_memory,
+            'created_time': date.strftime(self.created_time, '%Y-%m-%d %H-%M-%S'),
+            'code': self.code
+        }
 
 
 
@@ -80,6 +80,3 @@ class ProblemComment(models.Model):
 
     def serializer(self, field_name):
         return self.__dict__
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
