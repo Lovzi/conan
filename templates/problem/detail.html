@@ -26,10 +26,10 @@
     </div>
     <div>
       <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#">问题描述</a></li>
-        <li role="presentation"><a href="#">解决方案</a></li>
-        <li role="presentation"><a href="#" class="problem-comments">问题讨论</a></li>
-        <li role="presentation"><a href="#">提交记录</a></li>
+        <li role="presentation" class="active problem-module-li problem-description-li"><a href="" class="problem-description-et">问题描述</a></li>
+        <li role="presentation" class="problem-module-li problem-solution-li"><a href="javascript:void(0);" class="problem-solution-et">解决方案</a></li>
+        <li role="presentation" class="problem-module-li problem-comments-li"><a href="javascript:void(0);" class="problem-comments-et">问题讨论</a></li>
+        <li role="presentation" class="problem-module-li problem-submissions-li"><a href="javascript:void(0);" class="problem-submissions-et">提交记录</a></li>
       </ul>
     </div>
     <div class="problem-container">
@@ -90,25 +90,34 @@
         </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title code-header">Code</h3>
-              <div class="dropdown code-language">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Dropdown
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
+            <div class="row">
+              <div class="col-md-9"><h3 class="panel-title code-header">Code</h3></div>
+                  <!-- Split button -->
+                <!-- Single button -->
+              <div class="col-md-3">
+                <div class="btn-group code-language-type">
+                  <button type="button" class="btn btn-default">Action</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="javascript:void(0);">C++</a></li>
+                    <li><a href="javascript:void(0);">C</a></li>
+                    <li><a href="javascript:void(0);">Java</a></li>
+                    <li><a href="javascript:void(0);">C#</a></li>
+                    <li><a href="javascript:void(0);">Golang</a></li>
+                    <li><a href="javascript:void(0);">Python</a></li>
+                  </ul>
+                </div>
               </div>
+            </div>
           </div>
           <div class="panel-body">
             <form role="form" class="code-form" action="/problem/answer">{% csrf_token %}
               <div class="form-group">
                 <textarea data-problemId="{{ problem.id }}" class="form-control code-editor" rows="25"></textarea>
+                  <label class="commit-result"></label>
                 <button class="btn btn-primary code-submit" type="button">提交</button>
             </div>
             </form>

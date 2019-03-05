@@ -8,7 +8,8 @@ urlpatterns = [
     path(r'<int:id>', views.ProblemDetailView.as_view(), name='problems_detail'),
     path(r'answer/<path:language>/', views.AnswerView.as_view(), name='answer'),
     path(r'<int:id>/comments/', views.ProblemCommentView.as_view()),
-    path(r'<int:id>/official', views.OfficialView.as_view())
+    path(r'<int:id>/submissions/', views.ProblemCommitRecordView.as_view()),
+    path(r'<int:id>/solution/', views.SolutionView.as_view())
     #path(r'<int:id>/comments/star/')
 ]
 

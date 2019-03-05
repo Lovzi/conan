@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from django.db import models
 
@@ -35,8 +35,9 @@ class CommitRecord(models.Model):
     result = models.CharField('结果', max_length=20, default="")
     cost_time = models.IntegerField('时间消耗', default=-1)
     cost_memory = models.IntegerField('内存消耗', default=-1)
-    created_time = models.DateField('提交时间', auto_now=True)
+    created_time = models.DateTimeField('提交时间', default=now)
     code = models.TextField('代码')
+    language = models.CharField(max_length=15, default="N/A")
 
     class Meta:
         db_table = 'commit_record'
@@ -51,7 +52,7 @@ class CommitRecord(models.Model):
             'result': self.result,
             'cost_time': self.cost_time,
             'cost_memory': self.cost_memory,
-            'created_time': date.strftime(self.created_time, '%Y-%m-%d %H-%M-%S'),
+            'created_time': datetime.strftime(self.created_time, '%Y-%m-%d %H-%M-%S'),
             'code': self.code
         }
 

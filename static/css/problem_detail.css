@@ -1,8 +1,16 @@
-.code-language{
+.code-language-type{
     float: right;
 }
+.code-language-type ul{
+    min-width: 90px;
+}
 .code-header{
-    display: inline;
+    display: inline-block;
+    margin-top: 10px;
+
+}
+.commit-result{
+    display: none;
 }
 .comment-mugshot{
     float: left;

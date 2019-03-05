@@ -34,12 +34,35 @@
 //
 // }
 
-function starProblemComment(commentId, problemId){
-
-}
-
 
 $().off().ready(function () {
+    $('.problem-submissions-et').click(function () {
+        let problemId = $('.data-problem-id').data('problem-id');
+        url = '/problems/' + problemId + '/submissions/'
+        $.get(url, {}, function (res) {
+             $('.problem-container').html(res['content'])
+        })
+        $('.active').toggleClass('active')
+        $('.problem-submissions-li').toggleClass('active')
+    });
+    $('.problem-solution-et').click(function () {
+        let problemId = $('.data-problem-id').data('problem-id');
+        url = '/problems/' + problemId + '/solution/'
+        $.get(url, {}, function (res) {
+             $('.problem-container').html(res['content'])
+        })
+        $('.active').toggleClass('active')
+        $('.problem-solution-   li').toggleClass('active')
+    });
+    $('.problem-comments-et').click(function () {
+        let problemId = $('.data-problem-id').data('problem-id');
+        url = '/problems/' + problemId + '/comments/'
+        $.get(url, {}, function (res) {
+             $('.problem-container').html(res['content'])
+        });
+        $('.active').toggleClass('active')
+        $('.problem-comments-li').toggleClass('active')
+    });
     $('.problem-container').on('click', '.submit-comment', function (event) {
         let target = event.target || window.event
         let obj = $(target)
@@ -70,18 +93,22 @@ $().off().ready(function () {
         }else{
             alert('请先登录')
         }
-    })
+    });
     // $('.problem-container').on('click', 'submit-comment', function (event) {
     //
     // });
 
-    $('.problem-comments').click(function () {
+    $('.problem-container').on('click', '.code-submit', function () {
+        let editor = $('.code-editor');
         let problemId = $('.data-problem-id').data('problem-id');
-        url = '/problems/' + problemId + '/comments/'
-        $.get(url, {}, function (res) {
-             $('.problem-container').html(res['content'])
-        })
-    })
+        let code = editor.val()
+        alert(problemId)
+        let url = "/problems/answer/g++/"
+        $.post(url, {'code': code, 'problem_id': problemId, 'user_id':'1'}, function(res) {
+            alert(res)
+        });
+    });
+
 
     $('.problem-container').on('click', '.reply-cls-btn', function (event) {
         let target = event.target

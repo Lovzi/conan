@@ -6,8 +6,7 @@ import requests
 from django.http import HttpResponseBadRequest, JsonResponse, QueryDict, HttpResponse
 from django.template import loader
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView
-
+from django.views.generic import ListView, DetailView, CreateView, TemplateView
 
 from accounts.models import User
 from problem.models import Problem, ProblemComment, CommitRecord
@@ -47,7 +46,8 @@ class AnswerView(View):
         code = request.POST.get('code')
         problem_id = self.request.POST.get('problem_id')
         problem_obj = Problem.objects.get(pk=problem_id)
-        commit = CommitRecord(code=code,pid=problem_id, uid=request.user.id)
+        language = self.kwargs.get('language')
+        commit = CommitRecord(code=code,pid=problem_id, uid=request.user.id, language=language)
         commit.save()
         print(code)
         serialzer_data = {
@@ -63,18 +63,34 @@ class AnswerView(View):
         data = json.dumps(serialzer_data)
 
         res = requests.post(url=url, data=data, headers={'Content-Type': 'application/json'})
-        print(data)
         data = json.loads(res.content)
+        print(data)
         commit.__dict__.update(data)
         commit.save()
         return JsonResponse(data)
 
 
+class ProblemCommitRecordView(ListView):
+    template_name = 'problem/commit_record.html'
+    context_object_name = 'records'
+    queryset = CommitRecord.objects.all()
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.problem_id = self.kwargs.get('id')
+        return queryset.filter(pid=self.problem_id).order_by('-created_time').all()
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data()
+        template_text = loader.render_to_string(self.template_name, context=context, request=request)
+        data = {'code': 0, 'content': template_text}
+        return JsonResponse(data)
+
 class ProblemCommentView(ListView):
     template_name = 'problem/comments.html'
     context_object_name = 'comments'
     queryset = ProblemComment.objects.all()
-
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
@@ -130,6 +146,11 @@ class ProblemCommentView(ListView):
         return content
 
 
-class OfficialView(View):
-    def get(self):
-        return HttpResponse()
+class SolutionView(TemplateView):
+    template_name = 'problem/solution.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        template_text = loader.render_to_string(self.template_name, context=context, request=request)
+        data = {'code': 0, 'content': template_text}
+        return JsonResponse(data)
