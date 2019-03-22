@@ -96,28 +96,28 @@
                 <!-- Single button -->
               <div class="col-md-3">
                 <div class="btn-group code-language-type">
-                  <button type="button" class="btn btn-default">Action</button>
+                  <button type="button" class="btn btn-default selected-language">C++</button>
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a href="javascript:void(0);">C++</a></li>
-                    <li><a href="javascript:void(0);">C</a></li>
-                    <li><a href="javascript:void(0);">Java</a></li>
-                    <li><a href="javascript:void(0);">C#</a></li>
-                    <li><a href="javascript:void(0);">Golang</a></li>
-                    <li><a href="javascript:void(0);">Python</a></li>
+                    <li><a href="javascript:void(0);" class="select-language" >C++</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">C</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">Java</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">C#</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">Golang</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">Python</a></li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
           <div class="panel-body">
-            <form role="form" class="code-form" action="/problem/answer">{% csrf_token %}
+            <form role="form" class="code-form" action="">{% csrf_token %}
               <div class="form-group">
                 <textarea data-problemId="{{ problem.id }}" class="form-control code-editor" rows="25"></textarea>
-                  <label class="commit-result"></label>
+                <h3 class="commit-result"></h3>
                 <button class="btn btn-primary code-submit" type="button">提交</button>
             </div>
             </form>

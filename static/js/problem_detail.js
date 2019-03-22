@@ -63,6 +63,7 @@ $().off().ready(function () {
         $('.active').toggleClass('active')
         $('.problem-comments-li').toggleClass('active')
     });
+
     $('.problem-container').on('click', '.submit-comment', function (event) {
         let target = event.target || window.event
         let obj = $(target)
@@ -102,13 +103,20 @@ $().off().ready(function () {
         let editor = $('.code-editor');
         let problemId = $('.data-problem-id').data('problem-id');
         let code = editor.val()
-        alert(problemId)
-        let url = "/problems/answer/g++/"
+        let language = $('.selected-language').text()
+        let url = "/problems/answer/"+ language +"/"
         $.post(url, {'code': code, 'problem_id': problemId, 'user_id':'1'}, function(res) {
-            alert(res)
+            let result = $('.commit-result')
+            result.html(res['result'])
+            result.css('display', 'inline')
+
         });
     });
 
+    $('.problem-container').on('click', '.select-language', function (event) {
+        let language = $(this).html()
+        $('.selected-language').html(language)
+    })
 
     $('.problem-container').on('click', '.reply-cls-btn', function (event) {
         let target = event.target

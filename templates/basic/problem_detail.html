@@ -1,0 +1,91 @@
+<div class="problem-description">
+        <div class="panel panel-info">
+          <div class="panel-heading">问题描述</div>
+          <div class="panel-body">
+            {{ problem.content }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输入</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.in_description }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输出</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.out_description }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输入样例</h3>
+          </div>
+          <div class="panel-body">
+            <pre>{{ problem.in_case }}</pre>
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输出样例</h3>
+          </div>
+          <div class="panel-body">
+            <pre>{{ problem.out_case }}</pre>
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">提示</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.tip }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">来源</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.source }}
+          </div>
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-9"><h3 class="panel-title code-header">Code</h3></div>
+                  <!-- Split button -->
+                <!-- Single button -->
+              <div class="col-md-3">
+                <div class="btn-group code-language-type">
+                  <button type="button" class="btn btn-default selected-language">C++</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="javascript:void(0);" class="select-language" >C++</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">C</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">Java</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">C#</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">Golang</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">Python</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <form role="form" class="code-form" action="">{% csrf_token %}
+              <div class="form-group">
+                <textarea data-problemId="{{ problem.id }}" class="form-control code-editor" rows="25"></textarea>
+                <h3 class="commit-result"></h3>
+                <button class="btn btn-primary code-submit" type="button">提交</button>
+            </div>
+            </form>
+          </div>
+        </div>
+    </div>

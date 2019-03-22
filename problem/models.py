@@ -20,6 +20,7 @@ class Problem(models.Model):
     out_case = models.TextField('样例输出')
     source = models.CharField('来源', max_length=50)
     tip = models.TextField('提示')
+    is_display = models.BooleanField('是否显示', default=True)
 
 
     class Meta:

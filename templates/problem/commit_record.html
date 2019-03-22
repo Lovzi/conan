@@ -12,7 +12,7 @@
                 <td>{{ forloop.counter }}</td>
                 <td>{{ record.created_time }}</td>
                 <td><a href="/problems/submissions/detail/{{ record.id }}/">{{ record.result }}</a></td>
-                {% if records.cost_tome == -1 %}
+                {% if records.cost_time == -1 %}
                     <td>N/A</td>
                 {% else %}
                     <td>{{ record.cost_time }}ms</td>

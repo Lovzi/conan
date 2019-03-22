@@ -1,6 +1,44 @@
 {% extends 'basic/base.html' %}
 {% load static %}
-
+{% block head %}
+    <link rel="stylesheet" type="text/css", href="{% static 'css/contest.css' %}">
+{% endblock %}
 {% block main %}
+<div class="jumbotron">
+    <h1>LetCode</h1>
+    <p>在letcode， 参加letcode模拟竞赛，以期在未来的世界舞台绽放光彩！！！</p>
+{#  <div class="profile-top container">#}
+{#  </div>#}
+</div>
+<div class="row contest-dis">
+    <div class="col-md-3"></div>
+    <div class="col-md-3 real-contest-module">
+        <div class="panel panel-default">
+            {% if last_contest %}
+                <p>参加这场{{ hours }}小时{{ minutes }}分钟的比赛</p>
+                <h2>{{ last_contest.contest_name }}</h2>
+                <span>{{ last_contest.start_time }}
+                    ~
+                    {{ last_contest.end_time }}</span>
+            {% else %}
+                <p>暂时没有比赛哦,去模拟往期竞赛吧</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="list-group">
+                <a class="list-group-item random-contest" href="javascript:void(0);">随机开始一场模拟竞赛</a>
+                <a class="list-group-item" href="javascript:void(0);">查看往期竞赛历史</a>
+            </div>
 
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+{% endblock %}
+
+{% block bottom %}
+    <script src="{% static 'js/contests.js' %}"></script>
 {% endblock %}

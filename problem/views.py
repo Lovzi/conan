@@ -1,5 +1,5 @@
 import json
-from datetime import date
+from datetime import datetime
 
 import requests
 
@@ -49,13 +49,12 @@ class AnswerView(View):
         language = self.kwargs.get('language')
         commit = CommitRecord(code=code,pid=problem_id, uid=request.user.id, language=language)
         commit.save()
-        print(code)
         serialzer_data = {
             'code': code,
             'problem_id': commit.pid,
             'user_id': commit.uid,
             'solution_id': commit.id,
-            'created_time': date.strftime(commit.created_time, '%Y-%m-%d %H-%M-%S'),
+            'created_time': datetime.strftime(commit.created_time, '%Y-%m-%d %H-%M-%S'),
             'time_limited': problem_obj.time_limited,
             'memory_limited': 32768
         }
@@ -63,8 +62,8 @@ class AnswerView(View):
         data = json.dumps(serialzer_data)
 
         res = requests.post(url=url, data=data, headers={'Content-Type': 'application/json'})
+        print(res.content)
         data = json.loads(res.content)
-        print(data)
         commit.__dict__.update(data)
         commit.save()
         return JsonResponse(data)
