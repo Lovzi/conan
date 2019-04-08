@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.contrib.auth import REDIRECT_FIELD_NAME, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.http import is_safe_url
@@ -87,11 +87,26 @@ class ProfileView(TemplateView):
 
 class ProfileUpdateView(View):
     def post(self, request, *args, **kwargs):
-        params = {'id': request.user.id}
-        params.update(request.POST)
-        print(params)
+        field = request.POST.get('field')
+        data = request.POST.get('data')
+        if field and data and field[0] and data[0]:
+            params = {'id': request.user.id, field: data}
+            user = User(**params)
+            user.save(update_fields=[field])
+            res = {
+                'status': True,
+                'data': data,
+                'msg': "修改成功"
+            }
+        else:
+            res = {
+                'status': False,
+                'data': None,
+                'msg': "数据不能为空哦"
+            }
+        return JsonResponse(res)
 
-# class ProfileUpdateView(UpdateAPIView):
-#     def update(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+        print(self.kwargs, kwargs)
 
 
