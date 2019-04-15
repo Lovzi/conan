@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
 
-from letcode import settings
+from conan import settings
 
 # Create your models here.
 

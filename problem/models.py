@@ -5,7 +5,10 @@ from django.db import models
 # Create your models here.
 from django.utils.timezone import now
 
-from letcode import settings
+from accounts.models import User
+from common.models import Tag
+from conan import settings
+from contest.models import Contest
 
 
 class Problem(models.Model):
@@ -21,7 +24,13 @@ class Problem(models.Model):
     source = models.CharField('来源', max_length=50)
     tip = models.TextField('提示')
     is_display = models.BooleanField('是否显示', default=True)
-
+    created_time = models.DateTimeField(auto_now_add=True,
+                                       default=datetime.strptime('1970-01-01 00:00:00', "%Y-%m-%d %H:%M:%S"))
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag)
+    last_modify = models.DateTimeField(auto_now_add=True,
+                                       default=datetime.strptime('1970-01-01 00:00:00', "%Y-%m-%d %H:%M:%S"))
 
     class Meta:
         db_table = 'problem'

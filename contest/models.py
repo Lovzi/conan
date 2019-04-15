@@ -3,7 +3,7 @@ import time
 from django.db import models
 from django.utils.timezone import now
 
-from letcode import settings
+from conan import settings
 from problem.models import Problem, CommitRecord
 from accounts.models import User
 
@@ -11,10 +11,11 @@ from accounts.models import User
 class Contest(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    contest_name = models.CharField(max_length=50)
-    description = models.CharField(max_length=250, default="")
+    title = models.CharField(max_length=50)
+    description = models.TextField(max_length=250, default="")
     is_official = models.BooleanField(default=False)
-    is_finish = models.BooleanField(default=False)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    visible = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'contest'

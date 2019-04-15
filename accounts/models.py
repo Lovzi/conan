@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
+
 # Create your models here.
 
 class User(AbstractUser):
@@ -14,12 +15,12 @@ class User(AbstractUser):
     department = models.CharField(verbose_name='所在学院', max_length=20, blank=True)
     sex = models.CharField(verbose_name='性别', max_length=2, blank=True)
     birthday = models.DateField(verbose_name='生日', blank=True, null=True)
-    introduce = models.CharField(verbose_name='个人介绍', max_length=64, blank=True)
+    introduce = models.CharField(verbose_name='个人介绍', max_length=254, blank=True)
     blog = models.CharField(verbose_name='博客/github', max_length=20, blank=True)
     last_login = models.DateField(verbose_name='最近登录', default=now)
     skill = models.CharField(verbose_name='技能', max_length=100, blank=True)
     last_mod_time = models.DateTimeField('修改时间', default=now)
-    is_group = models.BooleanField('是否队伍',default=False)
+    group = models.ForeignKey('Group',default=False, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'user'
@@ -28,3 +29,7 @@ class User(AbstractUser):
         verbose_name_plural = '用户'
 
 
+class Group(models.Model):
+    name = models.CharField(max_length=50)
+    introduce = models.CharField(max_length=254, blank=True)
+    date_joined = models.DateTimeField(default=now)
