@@ -8,8 +8,8 @@ from django.template import loader
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, TemplateView
 
-from accounts.models import User
-from problem.models import Problem, ProblemComment, CommitRecord
+from common.models import User
+from common.models import Problem, ProblemComment, ProblemCommitRecord
 from utils.paginator import ProblemPaginator
 
 
@@ -47,7 +47,7 @@ class AnswerView(View):
         problem_id = self.request.POST.get('problem_id')
         problem_obj = Problem.objects.get(pk=problem_id)
         language = self.kwargs.get('language')
-        commit = CommitRecord(code=code,pid=problem_id, uid=request.user.id, language=language)
+        commit = ProblemCommitRecord(code=code,pid=problem_id, uid=request.user.id, language=language)
         commit.save()
         serialzer_data = {
             'code': code,
@@ -72,7 +72,7 @@ class AnswerView(View):
 class ProblemCommitRecordView(ListView):
     template_name = 'problem/commit_record.html'
     context_object_name = 'records'
-    queryset = CommitRecord.objects.all()
+    queryset = ProblemCommitRecord.objects.all()
 
     def get_queryset(self):
         queryset = super().get_queryset()

@@ -4,7 +4,7 @@
 from django.views.generic import TemplateView, ListView
 
 from common.models import Tag
-from problem.models import Problem
+from common.models import Problem
 from problem.views import ProblemListView
 from utils.paginator import ProblemPaginator
 

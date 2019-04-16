@@ -12,7 +12,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, RedirectView, TemplateView
 
 from accounts.forms import RegisterForm, LoginForm
-from accounts.models import User
+from common.models import User
 
 
 class LoginView(FormView):

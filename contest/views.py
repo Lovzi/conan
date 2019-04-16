@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView, DetailView, ListView
 
-from contest.models import Contest
+from common.models import Contest
 
 
 class IndexView(TemplateView):
