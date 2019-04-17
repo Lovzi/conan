@@ -34,7 +34,7 @@ class User(AbstractUser):
     last_login = models.DateField(verbose_name='最近登录', default=now)
     skill = models.CharField(verbose_name='技能', max_length=100, blank=True)
     last_mod_time = models.DateTimeField('修改时间', default=now)
-    group = models.ForeignKey(Group, related_name="users", on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, related_name="users", on_delete=models.CASCADE, null=True)
 
     class Meta:
         db_table = 'user'
@@ -107,7 +107,7 @@ class Problem(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     contest = models.ForeignKey(Contest, null=True, related_name="problems", on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, related_name="created_problems", on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, related_name='problems')
 
     last_modify = models.DateTimeField(auto_now_add=True)
 
@@ -131,7 +131,7 @@ class AbstractCommitRecord(models.Model):
         abstract = True
 
 
-    class ContestCommitRecord(AbstractCommitRecord):
+class ContestCommitRecord(AbstractCommitRecord):
     contest = models.ForeignKey(Contest, verbose_name='比赛', related_name="commits", on_delete=models.CASCADE)
     is_simulation = models.IntegerField('是否模拟', default=False)
     group = models.ForeignKey(Group, verbose_name='队伍', related_name="commits", on_delete=models.CASCADE)
@@ -201,6 +201,7 @@ class Doubt(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者',
                                related_name="doubts", on_delete=models.CASCADE)
     star = models.BigIntegerField()
+    tags = models.ManyToManyField(Tag, related_name='doubts')
 
     class Meta:
         db_table = 'doubt'
