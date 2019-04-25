@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'discuss.apps.DiscussConfig',
     'explore.apps.ExploreConfig',
     'common.apps.CommonConfig',
-    'utils'
+    'utils',
+    #'xadmin',
+    #'crispy_forms',
+   # 'reversion',
 ]
 
 MIDDLEWARE = [
