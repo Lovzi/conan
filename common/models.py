@@ -47,7 +47,7 @@ class Tag(models.Model):
     name = models.CharField(max_length=20)
 
     class Meta:
-        db_table = 'Tag'
+        db_table = 'tag'
 
 
 class Contest(models.Model):
@@ -176,6 +176,9 @@ class AbstractComment(models.Model):
     star = models.IntegerField('点赞', default=0)
     is_private =models.BooleanField('是否私有', default=False)
     is_parent_comment = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
 
 
 class ProblemComment(AbstractComment):
