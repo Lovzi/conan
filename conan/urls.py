@@ -22,10 +22,10 @@ from accounts import views
 
 #from xadmin.plugins import xversion
 #xversion.register_models()
-
+import xadmin
 urlpatterns = [
     path(r'', include('common.urls', namespace='common')),
-    path(r'admin/', admin.site.urls),
+    path(r'xadmin/', xadmin.site.urls),
     #path(r'xadmin/', xadmin.site.urls),
     path(r'accounts/', include('accounts.urls', namespace='accounts')),
     path(r'problems/', include('problem.urls', namespace='problems')),
