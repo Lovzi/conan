@@ -35,6 +35,7 @@ class User(AbstractUser):
     skill = models.CharField(verbose_name='技能', max_length=100, blank=True)
     last_mod_time = models.DateTimeField('修改时间', default=now)
     group = models.ForeignKey(Group, related_name="users", on_delete=models.CASCADE, null=True)
+    permissions = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'user'

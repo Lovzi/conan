@@ -2,7 +2,9 @@
 
 # Create your views here.
 import json
+import os
 
+from django.http import HttpResponse
 from django.views import View
 from django.views.generic import TemplateView, ListView
 
@@ -49,9 +51,11 @@ class SearchView(ListView):
 
 class ToolView(View):
     def get(self, request, *args, **kwargs):
-        with open('../database/problems.json', 'r') as f:
+        path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'database', 'problems.json')
+        with open(path, 'r') as f:
             data = json.load(f)
-        for single in data['data']['result']:
+        difficulty = {'low': 1, 'mid':2}
+        for single in data['data']['results']:
             fields = {
                 'title': single['title'],
                 'content': single['description'],
@@ -62,8 +66,15 @@ class ToolView(View):
                 'tip': single['hint'],
                 'time_limited': single['time_limit'],
                 'memory_limited': single['memory_limit'],
-                'source': single['source']
-                ''
-
+                'source': single['source'],
+                'created_by': request.user,
+                'rank': difficulty.get(single['difficulty'], 3)
             }
-            Problem.objects.create()
+            problem = Problem.objects.create(**fields)
+            for t in single['tags']:
+                if 'qduoj' in t:
+                    continue
+                tag = Tag.objects.create(name=t)
+                problem.tags.add(tag)
+
+        return HttpResponse('success')

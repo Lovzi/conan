@@ -17,10 +17,16 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 from accounts import views
+#import xadmin
+#xadmin.autodiscover()
+
+#from xadmin.plugins import xversion
+#xversion.register_models()
 
 urlpatterns = [
     path(r'', include('common.urls', namespace='common')),
     path(r'admin/', admin.site.urls),
+    #path(r'xadmin/', xadmin.site.urls),
     path(r'accounts/', include('accounts.urls', namespace='accounts')),
     path(r'problems/', include('problem.urls', namespace='problems')),
     path(r'contest/', include('contest.urls', namespace='contest')),
