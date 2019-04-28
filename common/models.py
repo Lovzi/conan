@@ -50,6 +50,13 @@ class Tag(models.Model):
         db_table = 'tag'
 
 
+class ContestStatus:
+    CONTEST_APPLYING = "-2"
+    CONTEST_APPLY_END = "-1"
+    CONTEST_UNDERWAY = "0"
+    CONTEST_ENDED = "1"
+
+
 class Contest(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
@@ -65,6 +72,21 @@ class Contest(models.Model):
         db_table = 'contest'
         verbose_name = '竞赛'
         verbose_name_plural = '竞赛'
+
+    @property
+    def status(self):
+        if self.apply_end > now():
+            # 没有开始 返回1
+            return ContestStatus.CONTEST_APPLYING
+        elif self.apply_end < now() and self.start_time > now():
+            return ContestStatus.CONTEST_APPLY_END
+        elif self.end_time < now():
+            # 已经结束 返回-1
+            return ContestStatus.CONTEST_ENDED
+        else:
+            # 正在进行 返回0
+            return ContestStatus.CONTEST_UNDERWAY
+
 
 
 class ContestApply(models.Model):
