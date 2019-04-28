@@ -7,28 +7,38 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView, DetailView, ListView
 
-from common.models import Contest
+from common.models import Contest, ContestStatus
 
 
-class IndexView(TemplateView):
+class ContestIndexView(TemplateView):
     template_name = 'contest/index.html'
 
     def get(self, request, *args, **kwargs):
-        object_list = Contest.objects.all().order_by('-start_time')
+        object_list = Contest.objects.all().order_by('start_time')
         if len(object_list):
-            last_contest = object_list[0]
-            duration = last_contest.end_time - last_contest.start_time
-            hours = duration.seconds // 3600
-            minutes = duration.seconds % 3600 // 60
-            self.extra_context = {
-                'last_contest': last_contest,
-                'hours': hours,
-                'minutes': minutes
-            }
+            last_contest = object_list[-1]
+            status = last_contest.status
+            if status == ContestStatus.CONTEST_APPLYING:
+                pass
+            elif status == ContestStatus.CONTEST_APPLY_END:
+                pass
+            elif status == ContestStatus.CONTEST_UNDERWAY:
+                duration = last_contest.end_time - last_contest.start_time
+                hours = duration.seconds // 3600
+                minutes = duration.seconds % 3600 // 60
+                self.extra_context = {
+                    'last_contest': last_contest,
+                    'hours': hours,
+                    'minutes': minutes
+                }
+            else:
+                self.extra_context = {
+                    'last_contest': None,
+                }
         else:
             last_contest = None
             self.extra_context = {
-                'last_contest': None
+                'last_contest': last_contest
             }
         return super().get(request, *args, **kwargs)
 
