@@ -1,4 +1,79 @@
-.real-contest-module{
-    /*color: white;*/
-    background: #2e6da4;
+*{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+.real-con-mo{
+    background: #2d8cf0;
+    padding: 20px;
+    width: 80%;
+    height: 200px;
+    border-radius: 15px;
+    margin: 0 10%;
+}
+body{
+    background: #f8f8f9;
+}
+.contest-module-title{
+    color: #FBFBFB;
+}
+.contest-tip{
+    font-size: 16px;
+    color: #CCCCCC;
+}
+.random-contest{
+    width: 100%;
+
+}
+.vir-ct-mod{
+    background: #FFF;
+    padding: 20px;
+    height: 200px;
+    border-radius: 15px;
+}
+.vir-ct-link{
+    height: 70%;
+    display: block;
+}
+.vir-test-te{
+    color: #2d8cf0;
+}
+.vir-ct-his{
+    display: block;
+    height: 30%;
+    margin: 20px 5px 5px;
+    border-top: 1px solid #c0c0c0;
+    text-align: center;
+}
+.ct-his-des{
+    color: #aaaaaa;
+    font-size: 16px;
+    margin-top: 8px;
+}
+.pre-ct-lt-pl{
+    height: 800px;
+    margin-top: 30px;
+    background: #00a9ff;
+    border-radius: 20px;
+    padding: 0;
+    overflow: hidden;
+}
+.pre-ct-lt-h{
+    padding: 20px;
+    height: 120px;
+    background: #FFFFFF;
+}
+.pre-ct-lg-des{
+    color: #afafaf;
+    line-height: 22px;
+    font-weight: 500;
+    font-size: 18px;
+    margin: 0;
+}
+.pre-ct-lt-tl{
+    margin-top: 5px;
+    font-size: 30px;
+    font-weight: 600;
 }

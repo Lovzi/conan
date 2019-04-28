@@ -12,26 +12,42 @@
 </div>
 <div class="row contest-dis">
     <div class="col-md-3"></div>
-    <div class="col-md-3 real-contest-module">
-        <div class="panel panel-default">
+    <div class="col-md-4 contest-module">
+        <div class="real-con-mo">
             {% if last_contest %}
-                <p>参加这场{{ hours }}小时{{ minutes }}分钟的比赛</p>
-                <h2>{{ last_contest.contest_name }}</h2>
+                <h2 class="contest-module-title">参加这场{{ hours }}小时{{ minutes }}分钟的比赛</h2>
+                <h3>{{ last_contest.contest_name }}</h3>
                 <span>{{ last_contest.start_time }}
                     ~
                     {{ last_contest.end_time }}</span>
             {% else %}
-                <p>暂时没有比赛哦,去模拟往期竞赛吧</p>
+                <p class="contest-tip">暂时没有比赛哦</p>
+                <h2 class="contest-module-title">去模拟往期竞赛吧</h2>
             {% endif %}
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="list-group">
-                <a class="list-group-item random-contest" href="javascript:void(0);">随机开始一场模拟竞赛</a>
-                <a class="list-group-item" href="javascript:void(0);">查看往期竞赛历史</a>
+    <div class="col-md-2 vir-ct-mod">
+        <a class="vir-ct-link">
+            <span>随机开始一场</span>
+            <h3 class="vir-test-te" href="javascript:void(0);">模拟竞赛</h3>
+        </a>
+        <a class="vir-ct-his" href="javascript:void(0);"><p class="ct-his-des">查看往期竞赛历史</p></a>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<div class="row con-res-mod">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-5"></div>
+            <div class="col-md-7 pre-ct-lt-pl">
+                <div class="pre-ct-lt-h">
+                    <p class="pre-ct-lt-des">参加模拟赛</p>
+                    <p class="pre-ct-lt-des">为了未来更好的准备</p>
+                    <div class="pre-ct-lt-tl">竞赛回顾</div>
+                </div>
+                <div></div>
             </div>
-
         </div>
     </div>
     <div class="col-md-3"></div>
