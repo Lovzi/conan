@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'basic/base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="/static/css/ct-detail.css">
+{% endblock %}
 
-</body>
-</html>
+{% block main %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="rt-ct-idx"><a href="/contest/"><i></i> &nbsp;返回竞赛主页</a></div>
+            <div class="title">第130场周赛</div>
+            <div class="panel panel-default">
+                <div class="panel-title start-time-panel">
+                    <div class="start-time">本场竞赛将在 3 天 16 小时 1 分 13 秒 内开始</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+        <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="content">
+                        <div class="content-title">
+                            <h3 class="text-300">欢迎来到第130场周赛</h3>
+                        </div>
+                        <div class="contest-tip">
+                           <h4 class="text-200">重要提示</h4>
+                        </div>
+                        <div class="description">
+                            <ol>
+                                <li class="ct-rule">请注意，每个错误提交的惩罚时间已经从 10分钟 改变为了 5分钟 。</li>
+                                <li class="ct-rule">
+                                    所有的解答提交都会自动经过我们严格智能的作弊侦测系统。 如被检查出抄袭、作弊等行为，将会直接导致
+                                    参赛资格被取消 以及 至少三周的账号冻结 。
+                                    力扣一向非常重视竞赛的公平，为了保障每一位用户的权益，
+                                    我们会坚持以 零容忍 的态度维护竞赛的公平、公正
+                                </li>
+                            </ol>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="notice">
+                            <div class="notice-title">通知</div>
+                            <div class="notice-content">您必须先 报名 后方能参加该场竞赛。我们祝愿您参赛愉快！</div>
+                            <div class="notice-btn">
+                                &nbsp;您还未报名
+                                <button class="btn btn-default apply-btn">现在报名</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+{% endblock %}

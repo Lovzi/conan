@@ -63,6 +63,9 @@ class ContestPreviousView(ListView):
         queryset = super().get_queryset().order_by('-id')
         return queryset
 
+class ContestDetailView(TemplateView):
+    template_name = 'contest/detail.html'
+
 
 class VirtualRandomView(View):
     def get(self, request, *args, **kwargs):

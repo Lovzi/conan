@@ -1,0 +1,79 @@
+a{
+    text-decoration: none;
+}
+body{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background: #f8f8f9;
+}
+a:hover{
+    text-decoration: none;
+}
+.rt-ct-idx{
+    width: 100%;
+    margin-top: 30px;
+    height: 30px;
+}
+.rt-ct-idx a{
+    color: #afafaf;
+    font-size: 22px;
+}
+.title{
+    font-size: 40px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.start-time-panel{
+    border-left: #2d8cf0 5px solid;
+}
+.start-time{
+    padding: 18px 20px;
+    font-size: 25px;
+}
+.text-300{
+    font-weight: 300;
+    font-size: 28px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+.text-200{
+    font-weight: 300;
+    font-size: 24px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+.ct-rule{
+    margin-top: 10px ;
+    display:list-item;
+    line-height: 1.7;
+    font-size: 19px;
+}
+
+.notice-title{
+    font-weight: 300;
+    font-size: 24px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+.notice-content{
+    margin-top: 10px ;
+    line-height: 1.7;
+    font-size: 19px;
+}
+.apply-btn{
+    border: none;
+    background: #2d8cf0;
+    color: white;
+    font-size: 14px;
+}
+.notice-btn{
+    margin-top: 10px ;
+    font-size: 19px;
+}
+.apply-btn{
+    font-size: 18px;
+    height: 40px;
+}

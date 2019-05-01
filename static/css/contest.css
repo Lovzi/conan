@@ -8,10 +8,10 @@ a:hover{
 .real-con-mo{
     background: #2d8cf0;
     padding: 20px;
-    width: 80%;
+    width: 90%;
     height: 200px;
     border-radius: 15px;
-    margin: 0 10%;
+    margin-right: 10%;
 }
 body{
     background: #f8f8f9;
@@ -53,9 +53,8 @@ body{
     margin-top: 8px;
 }
 .pre-ct-lt-pl{
-    height: 800px;
     margin-top: 30px;
-    background: #00a9ff;
+    background: #FFFFFF;
     border-radius: 20px;
     padding: 0;
     overflow: hidden;
@@ -63,7 +62,6 @@ body{
 .pre-ct-lt-h{
     padding: 20px;
     height: 120px;
-    background: #FFFFFF;
 }
 .pre-ct-lg-des{
     color: #afafaf;
@@ -76,4 +74,30 @@ body{
     margin-top: 5px;
     font-size: 30px;
     font-weight: 600;
+}
+.pre-ct-title{
+    color: #373737;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 16px;
+}
+.pre-ct-time{
+    color: grey;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 14px;
+}
+.pre-ct-item-right{
+    margin-top: 12px;
+    margin-right: 0;
+    height: 25px;
+    line-height: 25px;
+}
+.virtual-btn{
+    border: none;
+    background: #2d8cf0;
+    color: white;
+    float: right;
+    height: 25px;
+    font-size: 14px;
 }
