@@ -36,13 +36,13 @@ a:hover{
 }
 .text-300{
     font-weight: 300;
-    font-size: 22px;
+    font-size: 21px;
     margin-top: 50px;
     margin-bottom: 10px;
 }
 .text-200{
     font-weight: 300;
-    font-size: 19px;
+    font-size: 18px;
     margin-top: 40px;
     margin-bottom: 10px;
 }
@@ -50,19 +50,19 @@ a:hover{
     margin-top: 10px ;
     display:list-item;
     line-height: 1.7;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .notice-title{
     font-weight: 300;
-    font-size: 19px;
+    font-size: 18px;
     margin-top: 40px;
     margin-bottom: 10px;
 }
 .notice-content{
     margin-top: 10px ;
     line-height: 1.7;
-    font-size: 16px;
+    font-size: 15px;
 }
 .apply-btn{
     border: none;
@@ -72,5 +72,5 @@ a:hover{
 }
 .notice-btn{
     margin-top: 10px ;
-    font-size: 16px;
+    font-size: 15px;
 }
