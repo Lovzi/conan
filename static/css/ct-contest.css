@@ -64,13 +64,47 @@ a:hover{
     line-height: 1.7;
     font-size: 15px;
 }
-.apply-btn{
-    border: none;
-    background: rgb(48, 133, 214);
-    color: white;
-    font-size: 14px;
-}
 .notice-btn{
     margin-top: 10px ;
     font-size: 15px;
+}
+.exit-btn{
+    background: #d9534f;
+    color: white;
+    font-size: 14px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.exit-btn:hover{
+    background: #d43f3a;
+    color: white;
+}
+.no-pading{
+   padding: 0;
+}
+.no-margin{
+    margin: 0;
+}
+.ranking-more-btn{
+    text-decoration: none;
+    border-top: 1px solid #dddddd;
+    text-align: center;
+    display: block;
+    padding: 15px;
 }

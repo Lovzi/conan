@@ -1,6 +1,143 @@
 {% extends 'basic/base.html' %}
 {% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="/static/css/ct-contest.css">
+{% endblock %}
 
 {% block main %}
-    contest
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="rt-ct-idx"><a href="/contest/"><i></i> &nbsp;返回竞赛主页</a></div>
+            <div class="title">第130场周赛</div>
+            <div class="panel panel-default">
+                <div class="panel-title start-time-panel">
+                    <div class="start-time">本场竞赛已经开始，还剩余 1 小时 22 分 15 秒 结束</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="content">
+                        <div class="content-title">
+                            <h3 class="text-300">欢迎来到第130场周赛</h3>
+                        </div>
+                        <div class="contest-tip">
+                           <h4 class="text-200">重要提示</h4>
+                        </div>
+                        <div class="description">
+                            <ol>
+                                <li class="ct-rule">请注意，每个错误提交的惩罚时间已经从 10分钟 改变为了 5分钟 。</li>
+                                <li class="ct-rule">
+                                    所有的解答提交都会自动经过我们严格智能的作弊侦测系统。 如被检查出抄袭、作弊等行为，将会直接导致
+                                    参赛资格被取消 以及 至少三周的账号冻结 。
+                                    力扣一向非常重视竞赛的公平，为了保障每一位用户的权益，
+                                    我们会坚持以 零容忍 的态度维护竞赛的公平、公正
+                                </li>
+                            </ol>
+                            <br>
+                        </div>
+                        <div class="notice">
+                            <div class="notice-title">通知</div>
+                            <div class="notice-content">您必须先 报名 后方能参加该场竞赛。我们祝愿您参赛愉快！</div>
+                            <div class="notice-btn">
+                                &nbsp;<strong>机会将留给有准备的人</strong>
+                                <button class="btn btn-default exit-btn">放弃比赛</button>
+                            </div>
+                            <br> <br> <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="col-md-6 problem-lt-ctr">
+                <ul class="list-group hover-panel contest-question-list">
+                    <li class="list-group-item">题目列表
+                        <span  data-toggle="tooltip"></span>
+                        <span class="pull-right">得分&nbsp;</span>
+                    </li>
+                    <li class="list-group-item">
+                        <a>K 次取反后最大化的数组和</a>
+                        <span class="badge">4</span>
+                    </li>
+                    <li class="list-group-item">
+                        <a>笨阶乘</a>
+                        <span class="badge">4</span>
+                    </li>
+                    <li class="list-group-item">
+                        <a>行相等的最少多米诺旋转</a>
+                        <span class="badge">4</span>
+                    </li>
+                    <li class="list-group-item">
+                        <a>先序遍历构造二叉树</a>
+                        <span class="badge">4</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6 rank-lt-ctr">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span>Conan排名</span>
+                    </div>
+                    <div class="panel-body no-pading">
+                        <table class="table table-striped no-margin">
+                            <thead>
+                                <tr>
+                                    <th>排名</th>
+                                    <th>用户名</th>
+                                    <th>得分</th>
+                                    <th>完成时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Sirius</td>
+                                    <td>0</td>
+                                    <td>00:00:00</td>
+                                </tr>
+                                        <tr>
+                                    <td>2</td>
+                                    <td>Sirius</td>
+                                    <td>0</td>
+                                    <td>00:00:00</td>
+                                </tr>
+                                        <tr>
+                                    <td>3</td>
+                                    <td>Sirius</td>
+                                    <td>0</td>
+                                    <td>00:00:00</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Sirius</td>
+                                    <td>0</td>
+                                    <td>00:00:00</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Sirius</td>
+                                    <td>0</td>
+                                    <td>00:00:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a class="ranking-more-btn" href="/contest/weekly-contest-127/ranking">更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
 {% endblock %}
