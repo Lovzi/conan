@@ -42,6 +42,11 @@ class ContestIndexView(TemplateView):
             }
         return super().get(request, *args, **kwargs)
 
+
+class GroupCreateView(TemplateView):
+    template_name = 'contest/create-group.html'
+
+
 class ContestView(TemplateView):
     template_name = 'contest/contest.html'
 
