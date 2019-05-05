@@ -13,7 +13,9 @@ class Group(models.Model):
     name = models.CharField(max_length=50)
     introduce = models.CharField(max_length=254, blank=True)
     date_joined = models.DateTimeField(default=now)
-
+    captain = models.CharField(max_length=50, default=None)
+    is_apply = models.BooleanField(default=False)
+    people_num = models.IntegerField(default=0)
     class Meta:
         db_table = 'group'
 
@@ -36,7 +38,7 @@ class User(AbstractUser):
     last_mod_time = models.DateTimeField('修改时间', default=now)
     group = models.ForeignKey(Group, related_name="users", on_delete=models.CASCADE, null=True)
     permissions = models.IntegerField(default=0)
-
+    is_captain = models.BooleanField(default=False)
     class Meta:
         db_table = 'user'
         verbose_name = '用户'
@@ -105,7 +107,7 @@ class ContestGrade(models.Model):
     group = models.ForeignKey(Group, related_name="grade", on_delete=models.CASCADE)
     grade = models.IntegerField()
     time_cost = models.TimeField(default=time.strptime('00:00:00', "%H:%M:%S"))
-    is_simulation = models.IntegerField('是否模拟', default=False)
+    is_simulation = models.BooleanField('是否模拟', default=False)
 
     class Meta:
         db_table = 'contest_grade'
