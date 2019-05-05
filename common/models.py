@@ -82,7 +82,7 @@ class Contest(models.Model):
             return ContestStatus.CONTEST_APPLY_END
         elif self.end_time < now():
             # 已经结束 返回-1
-            return ContestStatus.CONTEST_ENDED
+            return ContestStatus
         else:
             # 正在进行 返回0
             return ContestStatus.CONTEST_UNDERWAY

@@ -16,7 +16,7 @@ class ContestIndexView(TemplateView):
     def get(self, request, *args, **kwargs):
         object_list = Contest.objects.all().order_by('start_time')
         if len(object_list):
-            last_contest = object_list[-1]
+            last_contest = object_list[len(object_list) - 1]
             status = last_contest.status
             if status == ContestStatus.CONTEST_APPLYING:
                 pass
