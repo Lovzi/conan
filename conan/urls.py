@@ -26,7 +26,6 @@ import xadmin
 urlpatterns = [
     path(r'', include('common.urls', namespace='common')),
     path(r'xadmin/', xadmin.site.urls),
-    #path(r'xadmin/', xadmin.site.urls),
     path(r'accounts/', include('accounts.urls', namespace='accounts')),
     path(r'problems/', include('problem.urls', namespace='problems')),
     path(r'contest/', include('contest.urls', namespace='contest')),

@@ -10,6 +10,7 @@ urlpatterns = [
     path(r'', views.ContestIndexView.as_view()),
     # path(r'virtual_contest/', views.VirtualContestView.as_view()),
     path(r'previous/', views.ContestPreviousView.as_view()),
+    path(r'groups/', views.GroupCreateView.as_view()),
     #path(r'<path:contest_name>/detail/', views.ContestDetailView.as_view()),
     # path(r'virtual_contest/random/', views.VirtualRandomView.as_view()),
     path(r'<str:contest_name>/', views.ContestView.as_view()),
