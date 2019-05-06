@@ -2,13 +2,12 @@
 {% load static %}
 {% block main %}
     <div class="row">
-        <div class="col-md-4">123</div>
+        <div class="col-md-4"></div>
         <div class="col-md-4">
-    <div class="container">
+    <div class="register-ctr">
         <h2 class="form-signin-heading text-center">Create Your Account</h2>
 
         <div class="card card-signin">
-            <img class="img-circle profile-img" src="{% static 'images/avatar.png' %}" alt="">
             <form class="form-signin" action="{% url 'accounts:register' %}" method="post">
                 {% csrf_token %}
                 {% comment %}<label for="inputEmail" class="sr-only">Email address</label>
@@ -17,9 +16,11 @@
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>{% endcomment %}
                 {{ form.non_field_errors }}
                 {% for field in form %}
-                    {{ field.label }}
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">{{ field.label }}</label>
                     {{ field }}
-                    {{ field.errors }}
+                    <span>{{ field.errors }}</span>
+                  </div>
                 {% endfor %}
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Create Your Account</button>
 
@@ -40,7 +41,7 @@
 
     </div> <!-- /container -->
         </div>
-        <div class="col-md-4">123123</div>
+        <div class="col-md-4"></div>
     </div>
 
 {% endblock %}

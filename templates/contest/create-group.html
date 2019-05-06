@@ -1,0 +1,44 @@
+{% extends 'basic/base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="/static/css/ct-group.css">
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="tip">
+                <p class="tip-title">温馨提示：</p>
+                <ol>
+                    <li class="tip-content">所有队员确认后方可创建成功</li>
+                    <li class="tip-content">队员必须是一个已注册用户</li>
+                </ol>
+                <br>
+                <br>
+            </div>
+
+            <form>
+              <div class="form-group">
+                <label for="exampleInputEmail1">团队名字</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="团队名字">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">团队队长</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="团队队长">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputFile">队员1</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="队员1">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputFile">队员2</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="队员2">
+              </div>
+              <button type="submit" class="btn btn-default">创建</button>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+
+    </div>
+{% endblock %}
