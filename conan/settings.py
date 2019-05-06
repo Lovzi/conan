@@ -79,7 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'conan.wsgi.application'
-
+LOGIN_URL = '/accounts/login/'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -147,7 +147,6 @@ USE_L10N = True
 
 # USE_TZ = True
 
-
 AUTH_USER_MODEL = 'common.User'
 
 # Static files (CSS, JavaScript, Images)
@@ -155,3 +154,4 @@ AUTH_USER_MODEL = 'common.User'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
+# MEDIA_URL = '/'

@@ -36,7 +36,7 @@ class User(AbstractUser):
     last_login = models.DateField(verbose_name='最近登录', default=now)
     skill = models.CharField(verbose_name='技能', max_length=100, blank=True)
     last_mod_time = models.DateTimeField('修改时间', default=now)
-    group = models.ForeignKey(Group, related_name="users", on_delete=models.CASCADE, null=True)
+    group = models.ForeignKey(Group, related_name="users", on_delete=models.CASCADE, blank=True, null=True)
     permissions = models.IntegerField(default=0)
     is_captain = models.BooleanField(default=False)
     class Meta:
@@ -69,6 +69,7 @@ class Contest(models.Model):
     visible = models.BooleanField(default=True)
     created_time = models.DateTimeField(default=now)
     apply_end = models.DateTimeField()
+    group = models.ManyToManyField(Group,related_name='contests',null=True, blank=True, default=None)
 
     class Meta:
         db_table = 'contest'
@@ -88,7 +89,6 @@ class Contest(models.Model):
         else:
             # 正在进行 返回0
             return ContestStatus.CONTEST_UNDERWAY
-
 
 
 class ContestApply(models.Model):
