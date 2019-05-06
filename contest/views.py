@@ -1,5 +1,6 @@
 import random
 
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -73,7 +74,8 @@ class VirtualRandomView(View):
         data = {
             'status': True,
             'contestName': obj.contest_name
-        }
+        }\
+
         return JsonResponse(data)
 
 

@@ -1,5 +1,6 @@
 from django.contrib import auth
 from django.contrib.auth import REDIRECT_FIELD_NAME, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
