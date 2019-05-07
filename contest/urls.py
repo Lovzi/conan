@@ -16,7 +16,7 @@ urlpatterns = [
     path(r'activate/',views.ActivateEmail.as_view()),
     path(r'apply_group/', views.ApplyAddGroup.as_view()),
     path(r'agree/', views.Agree.as_view()),
-    path(r'start/', views.StartContest.view()),
+    path(r'start/', views.StartContest.as_view()),
     #path(r'<path:contest_name>/detail/', views.ContestDetailView.as_view()),
     # path(r'virtual_contest/random/', views.VirtualRandomView.as_view()),
     path(r'<str:contest_name>/', views.ContestView.as_view()),
