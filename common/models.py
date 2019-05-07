@@ -38,6 +38,7 @@ class User(AbstractUser):
     last_mod_time = models.DateTimeField('修改时间', default=now)
     group = models.ForeignKey(Group, related_name="users", on_delete=models.CASCADE, blank=True, null=True)
     permissions = models.IntegerField(default=0)
+    is_active_email = models.BooleanField(default=False)
     is_captain = models.BooleanField(default=False)
     class Meta:
         db_table = 'user'
@@ -69,7 +70,7 @@ class Contest(models.Model):
     visible = models.BooleanField(default=True)
     created_time = models.DateTimeField(default=now)
     apply_end = models.DateTimeField()
-    group = models.ManyToManyField(Group,related_name='contests',null=True, blank=True, default=None)
+    group = models.ManyToManyField(Group,related_name='contests', blank=True, default=None)
 
     class Meta:
         db_table = 'contest'

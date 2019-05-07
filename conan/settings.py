@@ -149,6 +149,13 @@ USE_L10N = True
 
 AUTH_USER_MODEL = 'common.User'
 
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'jimaoxu@163.com'
+EMAIL_HOST_PASSWORD = 'youxiang123'
+EMAIL_USE_TLS = False
+EMAIL_FROM = 'jimaoxu@163.com'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
