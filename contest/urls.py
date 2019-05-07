@@ -2,6 +2,7 @@
 #
 from django.urls import path
 
+
 from contest import views
 
 app_name = 'contest'

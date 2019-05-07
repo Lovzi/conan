@@ -2,6 +2,7 @@ import random
 import time
 import hashlib
 
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -229,6 +230,7 @@ class Agree(View):
 
     @method_decorator(login_required(login_url='/accounts/login/'))
     def get(self, request, *args, **kwargs):
+<<<<<<< HEAD
         respon = {'message': 'success', 'data': '', 'code': 10000}
         hm = hashlib.md5((request.user.username + request.user.email).encode('utf8'))
         if request.GET.get('activate', '') == hm.hexdigest():
@@ -245,6 +247,15 @@ class Agree(View):
             respon['message'] = 'fial'
             respon['code'] = 10015
         return JsonResponse(respon)
+=======
+        obj = random.choice(Contest.objects.all())
+        data = {
+            'status': True,
+            'contestName': obj.contest_name
+        }\
+
+        return JsonResponse(data)
+>>>>>>> upstream/master
 
 
 # 虚拟竞赛 url：/contest/virtual_contest/
