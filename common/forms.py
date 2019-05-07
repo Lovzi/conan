@@ -8,4 +8,8 @@ from django import forms
 
 class VerifyCreateGroup(forms.Form):
     name = forms.CharField(min_length=2,max_length=50)
+    email = forms.EmailField()
     introduce = forms.CharField(max_length=254)
+
+# class ActivateEmail(forms.Form):
+#     captcha = captchaField()
