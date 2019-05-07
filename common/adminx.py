@@ -6,7 +6,7 @@
 # @Software: PyCharm
 # @Email   : jimaoxu@163.com
 import xadmin
-from .models import *
+from common.models import *
 class GroupXadmin(object):
     list_display = ['name', 'introduce','date_joined']
 
