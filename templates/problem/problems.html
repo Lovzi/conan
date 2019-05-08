@@ -24,9 +24,11 @@
                 {% endif %}
                 <td>{{ problem.id }}</td>
                 <td><a href="/problems/{{ problem.id }}">{{ problem.title }}</a></td>
-                <td>{{ problem.tags }}</td>
+                <td>{% for tag in problem.tags.all %}
+                        <span class="badge">{{ tag.name }}</span>
+                    {% endfor %}</td>
                 <td></td>
-                <td>100%</td>
+                <td>{{ problem.ac }}%</td>
                 <td>{{ problem.rank }}</td>
             </tr>
         {% endfor %}
@@ -67,7 +69,7 @@
     </nav>
     </div>
   </div>
-  <div class="col-md-4">.col-md-1</div>
+  <div class="col-md-4"></div>
 </div>
 
 {% endblock %}

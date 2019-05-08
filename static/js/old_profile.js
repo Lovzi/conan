@@ -1,35 +1,6 @@
-var cookie = {
-    set:function(key,val,time){//设置cookie方法
-        let date=new Date(); //获取当前时间
-        let expiresDays=time;  //将date设置为n天以后的时间
-        date.setTime(date.getTime() + expiresDays*24*3600*1000); //格式化为cookie识别的时间
-        document.cookie=key + "=" + val +";expires="+date.toGMTString();  //设置cookie
-    },
-    get:function (Name) {
-        var search = Name + "="//查询检索的值
-        var returnvalue = "";//返回值
-        if (document.cookie.length > 0) {
-            sd = document.cookie.indexOf(search);
-            if (sd!== -1) {
-                sd += search.length;
-                end = document.cookie.indexOf(";", sd);
-                if (end === -1)
-                    end = document.cookie.length;
-                //unescape() 函数可对通过 escape() 编码的字符串进行解码。
-                returnvalue=unescape(document.cookie.substring(sd, end))
-            }}
-       return returnvalue;
-    },
-    delete: function(key){ //删除cookie方法
-        var date = new Date(); //获取当前时间
-        date.setTime(date.getTime()-10000); //将date设置为过去的时间
-        document.cookie = key + "=v; expires =" +date.toGMTString();//设置cookie
-    }
-};
-
-
 $(function () {
-    $('.profile-editor').click(function () {
+    $('.profile-panel').on('click', '.profile-editor', function () {
+        $(this).toggleClass('profile-editor')
         let field = $(this).data('field');
         let fieldClass = '.td-profile-' + field
         if(field === 'email'){
@@ -39,44 +10,56 @@ $(function () {
                 '    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Email">\n' +
                 '  </div>' +
                 '</form>'
+
+
         }
-        else if(field === 'birthday'){
+        else if(field === 'password'){
 
         }
         else{
-            var initValue = $(fieldClass).val();
+            // var initValue = $(fieldClass).val();
+            let initValue = $(this).parent().prev().html()
             var html =
                 '<form onsubmit="return false" class="profile-update-form">\n' +
                 '  <div class="form-group profile-update-group" data-field='+ field +'>\n' +
                 '    <input type="text" name="'+ field + '" class="form-control profile-text-input" data-initial="'+ initValue +'" placeholder="'+ initValue +'">\n' +
-                '    <button type="submit" class="btn btn-primary profile-edit-submit" onclick="profileUpdate()">保存</button>' +
-                '    <button class="btn btn-default edit-cancel" onclick="updateCancel()">取消</button>' +
+                '    <button type="submit" class="btn btn-primary profile-edit-submit" >保存</button>' +
+                '    <button class="btn btn-default edit-cancel">取消</button>' +
                 '  </div>' +
                 '</form>'
         }
         $(fieldClass).html(html)
     });
 
-
-});
-
-function updateCancel() {
-    alert('sdfdsf')
-    let initValue = $('.profile-text-input').data('initial');
-    let field = $('.profile-update-group').data('field');
-    let fieldClass = '.td-profile-' + field;
-    $(fieldClass).html(initValue)
-}
-function profileUpdate() {
-    field = $('.profile-update-group').data('field');
-    updateValue = $('.profile-text-input').val()
-    $.post("/accounts/profile/"+ field + "/", {sdf: updateValue}, function (res) {
-        let fieldClass = '.td-profile-' + field;
-        let value = res;
-        $(fieldClass).html(res)
+    $('.mugshot-username').on('click', '.mugshot-img', function () {
+        swal('')
     })
-}
 
+    $('.profile-panel').on('click', '.edit-cancel', function () {
+        let initValue = $('.profile-text-input').data('initial');
+        let field = $('.profile-update-group').data('field');
+        let fieldClass = '.td-profile-' + field;
+        $(fieldClass).html(initValue)
+        $(fieldClass).next().children().toggleClass('profile-editor')
+    });
+    $('.profile-panel').on('click', '.profile-edit-submit', function () {
+        let field = $('.profile-update-group').data('field');
+        let updateValue = $('.profile-text-input').val();
+        let fieldClass = '.td-profile-' + field;
+        let initValue = $('.profile-text-input').data('initial');
+        $.post("/accounts/profile/"+ field + "/", {field: field, data: updateValue}, function (res) {
+            if(res['status']){
+                $(fieldClass).html(res['data']);
+                swal('修改成功', res['msg'], "success")
+            }
+            else{
+                $(fieldClass).html(initValue)
+                swal('修改失败', res['msg'], "error")
+            }
+        })
+        $(fieldClass).next().children().toggleClass('profile-editor')
+    })
+});
 
 
 

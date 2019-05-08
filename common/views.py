@@ -48,48 +48,48 @@ class SearchView(ListView):
         return content
 
 
-class ToolView(View):
-    def get(self, request, *args, **kwargs):
-        path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'database', 'problems.json')
-        with open(path, 'r') as f:
-            data = json.load(f)
-        difficulty = {'low': 1, 'mid':2}
-        cases_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'cases')
-        for single in data['data']['results']:
-            fields = {
-                'title': single['title'],
-                'content': single['description'],
-                'in_description': single['input_description'],
-                'out_description': single['output_description'],
-                'in_case': single['samples'][0]['input'],
-                'out_case': single['samples'][0]['output'],
-                'tip': single['hint'],
-                'time_limited': single['time_limit'],
-                'memory_limited': single['memory_limit'],
-                'source': single['source'],
-                'created_by': request.user,
-                'rank': difficulty.get(single['difficulty'], 3)
-            }
-            problem = Problem.objects.create(**fields)
-            problem_in_case_path = os.path.join(cases_path, str(problem.id), 'in')
-            problem_out_case_path = os.path.join(cases_path, str(problem.id), 'out')
-            if not os.path.exists(problem_in_case_path):
-                os.makedirs(problem_in_case_path)
-            if not os.path.exists(problem_out_case_path):
-                os.makedirs(problem_out_case_path)
-            with open(os.path.join(problem_in_case_path, '1.in'), 'w', encoding='utf-8') as f:
-                f.write(single['samples'][0]['input'])
-            with open(os.path.join(problem_out_case_path, '1.out'), 'w', encoding='utf-8') as f:
-                f.write(single['samples'][0]['output'])
-            for t in single['tags']:
-                t = t.strip()
-                if 'qduoj' in t:
-                    print(t)
-                    continue
-                try:
-                    tag = Tag.objects.get(name=t)
-                except:
-                    tag = Tag.objects.create(name=t)
-                problem.tags.add(tag)
-
-        return HttpResponse('success')
+# class ToolView(View):
+#     def get(self, request, *args, **kwargs):
+#         path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'database', 'problems.json')
+#         with open(path, 'r') as f:
+#             data = json.load(f)
+#         difficulty = {'low': 1, 'mid':2}
+#         cases_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'cases')
+#         for single in data['data']['results']:
+#             fields = {
+#                 'title': single['title'],
+#                 'content': single['description'],
+#                 'in_description': single['input_description'],
+#                 'out_description': single['output_description'],
+#                 'in_case': single['samples'][0]['input'],
+#                 'out_case': single['samples'][0]['output'],
+#                 'tip': single['hint'],
+#                 'time_limited': single['time_limit'],
+#                 'memory_limited': single['memory_limit'],
+#                 'source': single['source'],
+#                 'created_by': request.user,
+#                 'rank': difficulty.get(single['difficulty'], 3)
+#             }
+#             problem = Problem.objects.create(**fields)
+#             problem_in_case_path = os.path.join(cases_path, str(problem.id), 'in')
+#             problem_out_case_path = os.path.join(cases_path, str(problem.id), 'out')
+#             if not os.path.exists(problem_in_case_path):
+#                 os.makedirs(problem_in_case_path)
+#             if not os.path.exists(problem_out_case_path):
+#                 os.makedirs(problem_out_case_path)
+#             with open(os.path.join(problem_in_case_path, '1.in'), 'w', encoding='utf-8') as f:
+#                 f.write(single['samples'][0]['input'])
+#             with open(os.path.join(problem_out_case_path, '1.out'), 'w', encoding='utf-8') as f:
+#                 f.write(single['samples'][0]['output'])
+#             for t in single['tags']:
+#                 t = t.strip()
+#                 if 'qduoj' in t:
+#                     print(t)
+#                     continue
+#                 try:
+#                     tag = Tag.objects.get(name=t)
+#                 except:
+#                     tag = Tag.objects.create(name=t)
+#                 problem.tags.add(tag)
+#
+#         return HttpResponse('success')

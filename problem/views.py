@@ -29,6 +29,13 @@ class ProblemListView(ListView):
                                      per_page=50,
                                      current_page=current_page)
         content['problems'] = paginator.page(paginator.current_page)
+        for problem in content['problems']:
+            commit_num = ProblemCommitRecord.objects.filter(problem=problem).count()
+            if commit_num:
+                ac_num = ProblemCommitRecord.objects.filter(problem=problem, result="Accepted").count()
+                problem.ac = ac_num / commit_num
+            else:
+                problem.ac = 0
         content['paginator'] = paginator
         content['current_page'] = paginator.current_page
         return content
@@ -76,8 +83,8 @@ class ProblemCommitRecordView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        self.problem_id = self.kwargs.get('id')
-        return queryset.filter(pid=self.problem_id).order_by('-created_time').all()
+        problem = Problem(id=self.kwargs.get('id'))
+        return queryset.filter(problem=problem).order_by('-created_time').all()
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
@@ -136,12 +143,12 @@ class ProblemCommentView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        self.problem_id = self.kwargs.get('id')
-        return queryset.filter(problem=self.problem_id, is_problem_comment=True).all()
+        self.problem = Problem(id=self.kwargs.get('id'))
+        return queryset.filter(problem=self.problem).all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         content = super().get_context_data()
-        content['problem_id'] = self.problem_id or self.kwargs.get('id')
+        content['problem_id'] = self.kwargs.get('id') or self.problem.id
         return content
 
 

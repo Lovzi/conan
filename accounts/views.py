@@ -107,7 +107,7 @@ class ProfileUpdateView(View):
             }
         return JsonResponse(res)
 
-    def get(self, request, *args, **kwargs):
-        print(self.kwargs, kwargs)
+
+
 
 
