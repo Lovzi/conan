@@ -195,7 +195,7 @@ class AbstractComment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者', related_name="%(class)s",
                                on_delete=models.CASCADE)
     reply = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='回复',
-                              related_name='%(class)s_replied', on_delete=models.CASCADE)
+                              related_name='%(class)s_replied',null=True, on_delete=models.CASCADE)
     parent_comment = models.ForeignKey('self', verbose_name="上级评论", related_name="children_comments", on_delete=models.CASCADE)
     visible = models.BooleanField('是否可见', default=True)
     star = models.IntegerField('点赞', default=0)
