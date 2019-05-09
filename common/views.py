@@ -1,11 +1,3 @@
-
-
-# Create your views here.
-import json
-import os
-
-from django.http import HttpResponse
-from django.views import View
 from django.views.generic import TemplateView, ListView
 
 from common.models import Tag
@@ -46,6 +38,7 @@ class SearchView(ListView):
         content['paginator'] = paginator
         content['current_page'] = paginator.current_page
         return content
+
 
 
 # class ToolView(View):

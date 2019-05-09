@@ -6,13 +6,15 @@
 
 {% block main %}
     <div class="row">
-        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            <div hidden class="contest-id" data-contest-id="{{ contest.id }}"></div>
+        </div>
         <div class="col-md-10">
             <div class="rt-ct-idx"><a href="/contest/"><i></i> &nbsp;返回竞赛主页</a></div>
-            <div class="title">第130场周赛</div>
+            <div class="title">{{ contest.title }}</div>
             <div class="panel panel-default">
                 <div class="panel-title start-time-panel">
-                    <div class="start-time">本场竞赛将在 3 天 16 小时 1 分 13 秒 内开始</div>
+                    <div class="start-time">本场竞赛将在 <span class="day">{{ time.0 }}</span> 天 <span class="hour"> {{ time.1 }}</span> 小时 <span class="minite">{{ time.2 }}</span> 分 <span class="second">{{ time.3 }}</span> 秒 内开始</div>
                 </div>
             </div>
         </div>
@@ -25,7 +27,7 @@
                 <div class="col-md-8">
                     <div class="content">
                         <div class="content-title">
-                            <h3 class="text-300">欢迎来到第130场周赛</h3>
+                            <h3 class="text-300">欢迎来到{{ contest.title }}</h3>
                         </div>
                         <div class="contest-tip">
                            <h4 class="text-200">重要提示</h4>
@@ -39,16 +41,26 @@
                                     力扣一向非常重视竞赛的公平，为了保障每一位用户的权益，
                                     我们会坚持以 零容忍 的态度维护竞赛的公平、公正
                                 </li>
+                                <li class="ct-rule">
+                                    {{ contest.description }}
+                                </li>
                             </ol>
                             <br>
                         </div>
                         <div class="notice">
                             <div class="notice-title">通知</div>
                             <div class="notice-content">您必须先 报名 后方能参加该场竞赛。我们祝愿您参赛愉快！</div>
-                            <div class="notice-btn">
-                                &nbsp;您还未报名
-                                <button class="btn btn-default apply-btn">现在报名</button>
-                            </div>
+                            {% if is_apply %}
+                                <div class="notice-btn">
+                                    <span class="apply-msg">&nbsp;您已报名成功</span>
+                                    <button class="btn btn-default cancel-btn">取消报名</button>
+                                </div>
+                            {% else %}
+                                <div class="notice-btn">
+                                    <span class="apply-msg">&nbsp;您还未报名</span>
+                                    <button class="btn btn-default apply-btn">现在报名</button>
+                                </div>
+                            {% endif %}
                             <br> <br> <br>
                         </div>
                     </div>
@@ -57,8 +69,141 @@
 
                 </div>
             </div>
-
         </div>
         <div class="col-md-1"></div>
     </div>
+{% endblock %}
+{% block bottom %}
+    <script>
+        $(function () {
+            let currentTimeStamp = {{ timestamp }};
+            let startTime = new Date(currentTimeStamp)
+            let timer = setInterval(function () {
+                let nowTime = new Date()
+                $('.day').html(startTime.getDate() - nowTime.getDate());
+                $('.hour').html(startTime.getHours() -nowTime.getHours());
+                $('.minite').html(startTime.getMinutes() - nowTime.getMinutes());
+                $('.second').html(startTime.getSeconds() - nowTime.getSeconds());
+            }, 1000)
+        })
+    </script>
+    <script>
+        $(function () {
+            function cancelApply(that) {
+                let url = '/contest/apply/cancel/'
+                let contestId = $('.contest-id').data('contest-id')
+                $.post(url, {contest_id: contestId}, function (res) {
+                    if(res.code === -10000){
+                        swal({
+                              title: res.message,
+                              text: res.detail,
+                              icon: "info",
+                        });
+                        that.css('background', "rgb(48, 133, 214)")
+                        that.html('现在报名')
+                        $('.apply-msg').html('您还未报名')
+                        that.toggleClass('cancel-btn')
+                        that.toggleClass('apply-btn')
+                    }else{
+                        swal({
+                              title: res.message,
+                              text: res.detail,
+                              icon: "error",
+                        });
+                    }
+                })
+
+            }
+            
+            function createGroup(that) {
+                swal({
+                    text: '请输入你的队名',
+                    content: "input",
+                    button: {
+                        text: "创建",
+                        closeModal: false,
+                    },
+                }).then(name => {
+                    if (!name) throw null;
+                    let url = "/contest/group/";
+                    $.post(url, {name: name}, function (res) {
+                        if (res.code === 10000) {
+                            swal(res.message, res.detail, "success")
+                        }else if(res.code === 10004){
+                            swal(res.message, res.detail, "info")
+                        }else{
+                            swal(res.message, res.detail, "error")
+                        }
+                    })
+                }).catch(err => {
+                  if (err) {
+                    swal("啊哦。。。", "服务器走丢了。。。", "error");
+                  } else {
+                    swal.stopLoading();
+                    swal.close();
+                  }
+                });
+            }
+            $('body').on('click', '.cancel-btn', function (e) {
+               let that = $(this)
+               swal({
+                  title: "操作提醒",
+                  text: "取消报名将无法参加比赛",
+                  icon: "warning",
+                  buttons: ["放弃", "确认取消"],
+               }).then(isEntry => {
+                    if(isEntry){
+                        cancelApply(that);
+                    }
+               });
+            })
+
+            $('body').on('click', '.apply-btn', function (e){
+                let url = '/contest/apply/';
+                let contestId = $('.contest-id').data('contest-id')
+                let that = $(this)
+                $.post(url, {contest_id: contestId}, function (res) {
+                    if(res.code === 10000){
+                        swal({
+                          title: res.message,
+                          text: res.detail,
+                          icon: "success",
+                        });
+                        that.css('background', "#d9534f")
+                        that.html('取消报名')
+                        that.toggleClass('cancel-btn')
+                        that.toggleClass('apply-btn')
+                        $('.apply-msg').html('您已报名成功')
+                    }else if(res.code === 10002){
+                        swal({
+                          title: res.message,
+                          text: res.detail,
+                          icon: "warning",
+                          buttons: ["取消报名", "创建队伍"],
+                        }).then(isCreate => {
+                            if(isCreate){
+                                createGroup(that);
+                            }
+                        });
+                    }else if(res.code === 10008){
+                        swal({
+                          title: res.message,
+                          text: res.detail,
+                          icon: "warning",
+                        })
+                        if(!res.is_valid_email){
+                            swal("激活失败", '您的邮箱似乎无效哦', 'error')
+                        }
+                    }
+                    else{
+                        swal({
+                          title: res.message,
+                          text: res.detail,
+                          icon: "error",
+                        });
+                    }
+                })
+            })
+        });
+    </script>
 {% endblock %}

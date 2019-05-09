@@ -35,7 +35,7 @@
 // }
 
 
-$().off().ready(function () {
+$().ready(function () {
     $('.problem-submissions-et').click(function () {
         let problemId = $('.data-problem-id').data('problem-id');
         url = '/problems/' + problemId + '/submissions/'
@@ -63,38 +63,44 @@ $().off().ready(function () {
         $('.active').toggleClass('active')
         $('.problem-comments-li').toggleClass('active')
     });
-
     $('.problem-container').on('click', '.submit-comment', function (event) {
-        let target = event.target || window.event
-        let obj = $(target)
-        if(obj.data('type') !== 'master'){
-            let commentObj = obj.parents('.singer-comment-container');
-            var repliedId = commentObj.data('replied-id')
-            var parentCommentId = commentObj.data('parent-comment-id');
-        }
+        let obj = $(this);
         let textArea = obj.prev();
-        //alert(document.cookie)
-        //if(document.cookie.indexOf('sessionid') !== -1)
+        let commentContent = textArea.val();
         let problemId = $('.data-problem-id').data('problem-id');
-        let userId = $('.user-id').data('user-id');
-        if(userId !== 'None'){
-            let commentComtent = textArea.val();
-            if(commentComtent === ""){
-                alert('评论不能为空')
-            }
-            else{
-                url = '/problems/' + problemId + '/comments/'
-                $.post(
-                    url,
-                    {'comment': commentComtent , 'problem_id': problemId, 'user_id': userId, 'replied_id':　repliedId, 'parent_comment_id': parentCommentId},
-                    function(res) {
-                        $('.problem-container').html(res['content'])
-                })
-            }
-        }else{
-            alert('请先登录')
-        }
     });
+    // $('.problem-container').on('click', '.submit-comment', function (event) {
+    //
+    //     let obj = $(this)
+    //     if(obj.data('type') !== 'master'){
+    //         let commentObj = obj.parents('.singer-comment-container');
+    //         var repliedId = commentObj.data('replied-id')
+    //         var parentCommentId = commentObj.data('parent-comment-id');
+    //     }
+    //     let textArea = obj.prev();
+    //     //alert(document.cookie)
+    //     //if(document.cookie.indexOf('sessionid') !== -1)
+    //     let problemId = $('.data-problem-id').data('problem-id');
+    //     let userId = $('.user-id').data('user-id');
+    //     if(userId !== 'None'){
+    //         let commentComtent = textArea.val();
+    //         alert(commentComtent)
+    //         if(commentComtent === ""){
+    //             alert('评论不能为空')
+    //         }
+    //         else{
+    //             url = '/problems/' + problemId + '/comments/'
+    //             $.post(
+    //                 url,
+    //                 {'comment': commentComtent , 'problem_id': problemId, 'user_id': userId, 'replied_id':　repliedId, 'parent_comment_id': parentCommentId},
+    //                 function(res) {
+    //                     $('.problem-container').html(res['content'])
+    //             })
+    //         }
+    //     }else{
+    //         alert('请先登录')
+    //     }
+    // });
     // $('.problem-container').on('click', 'submit-comment', function (event) {
     //
     // });
@@ -104,12 +110,20 @@ $().off().ready(function () {
         let problemId = $('.data-problem-id').data('problem-id');
         let code = editor.val()
         let language = $('.selected-language').text()
+        let result = $('.commit-result')
+        result.html("正在评测,请稍后...")
+        result.css('color', 'black')
+        result.css('display', 'inline')
         let url = "/problems/answer/"+ language +"/"
         $.post(url, {'code': code, 'problem_id': problemId, 'user_id':'1'}, function(res) {
-            let result = $('.commit-result')
-            result.html(res['result'])
+            result.html(res.result)
             result.css('display', 'inline')
-
+            if(res.status){
+                result.css('color', 'green')
+            }
+            else{
+                result.css('color', 'red')
+            }
         });
     });
 

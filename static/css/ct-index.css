@@ -18,11 +18,13 @@ body{
     margin: 0;
 }
 .contest-module-title{
-    color: #FBFBFB;
+    color: #FFFFFF;
 }
 .contest-tip{
-    font-size: 16px;
-    color: #CCCCCC;
+    color: #FBFBFB;
+    font-size: 18px;
+    margin-top: 0;
+
 }
 .random-contest{
     width: 100%;

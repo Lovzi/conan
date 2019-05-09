@@ -1,14 +1,14 @@
+import datetime
 import random
 import time
 import hashlib
 
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.http import JsonResponse, HttpResponse, Http404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from django.utils.decorators import method_decorator
-from django.utils.timezone import now
 from django.views import View
 from django.views.generic import TemplateView, DetailView, ListView
 from django.core.mail import send_mail
@@ -21,62 +21,117 @@ class ContestIndexView(TemplateView):
     template_name = 'contest/index.html'
 
     def is_apply(self, request):
-        if isinstance(request.user, User) and self.last_contest.start_time >= now():
-            group = request.user.group
-            if group in self.last_contest.group.all():
+        group_id = request.user.group.id
+        if self.last_contest is not None \
+                and self.last_contest.group.filter(id=group_id):
                 return True
         return False
 
+    def _format_contest_time(self):
+        format_str = datetime.datetime.strftime(self.last_contest.start_time,
+                                                '%Y-%m-%d %H:%M')
+        format_str += " ~ " + datetime.datetime.strftime(self.last_contest.end_time,
+                                                '%H:%M')
+        return format_str
+    @method_decorator(login_required(login_url='/accounts/login/'))
     def get(self, request, *args, **kwargs):
+
         object_list = Contest.objects.all().order_by('start_time')
         if len(object_list):
             self.last_contest = object_list[len(object_list) - 1]
             status = self.last_contest.status
             # 申请竞赛中
             if status == ContestStatus.CONTEST_APPLYING:
-                if self.is_apply(request):
-                    self.extra_context = {
-                        'ContestStatus': 5,
-                        'message': '等待比赛开始'
+                # if self.is_apply(request):
+                #     self.extra_context = {
+                #         'ContestStatus': 5,
+                #         'message': '等待比赛开始',
+                #         'data': {
+                #             'contest_info': {
+                #                 'title': self.last_contest.title,
+                #                 'time': self._format_contest_time()
+                #             },
+                #             'url': '/contest/%s/' %
+                #         }
+                #     }
+                # else:
+                self.extra_context = {
+                    'ContestStatus': status,
+                    'message': '参加这场竞赛',
+                    'data': {
+                        'contest_info': {
+                            'title': self.last_contest.title,
+                            'time': self._format_contest_time()
+                        },
+                        'url': '/contest/%s/detail/' % self.last_contest.id
                     }
-                else:
-                    self.extra_context = {
-                        'ContestStatus': status,
-                        'apply_url': '/contest/apply/'
-                    }
+                }
             # 申请竞赛结束
             elif status == ContestStatus.CONTEST_APPLY_END:
                 if self.is_apply(request):
                     self.extra_context = {
-                        'ContestStatus': 5,
-                        'message': '等待比赛开始'
+                        'ContestStatus': "5",
+                        'message': '等待比赛开始',
+                        'data': {
+                            'contest_info': {
+                                'title': self.last_contest.title,
+                                'time': self._format_contest_time()
+                            },
+                            'url': '/contest/%s/detail/' % self.last_contest.id
+                        }
                     }
+
                 else:
                     self.extra_context = {
                         'ContestStatus': status,
                         'message': '对不起，您错过了申请竞赛时间,可以进行模拟竞赛',
                         'virtualcontesturl': '/contest/virtual_contest/',
+                        'data': {
+                            'contest_info': {
+                                'title': self.last_contest.title,
+                                'time': self._format_contest_time()
+                            },
+                            'url': 'javascript:void(0);'
+                        }
 
                     }
             elif status == ContestStatus.CONTEST_UNDERWAY and self.is_apply(request):
-                duration = self.last_contest.end_time - self.last_contest.start_time
-                hours = duration.seconds // 3600
-                minutes = duration.seconds % 3600 // 60
+                # duration = self.last_contest.end_time - self.last_contest.start_time
+                # hours = duration.seconds // 3600
+                # minutes = duration.seconds % 3600 // 60
                 self.extra_context = {
                     'ContestStatus': status,
-                    'last_contest': self.last_contest,
-                    'hours': hours,
-                    'minutes': minutes,
-                    'contesturl':'',
+                    'message': "正在进行%s" % self.last_contest.title,
+                    'data': {
+                            'contest_info': {
+                                'title': self.last_contest.title,
+                                'time': self._format_contest_time()
+                            },
+                            'url': '/contest/%s/' % self.last_contest.id
+                    }
                 }
             else:
                 self.extra_context = {
-                    'last_contest': None,
+                    'ContestStatus': status,
+                    'message': "暂时没有竞赛",
+                    'data': {
+                        'contest_info': {
+                            'title': "去进行虚拟竞赛吧",
+                        },
+                        'url': 'javascript:void(0);'
+                    }
                 }
         else:
-            self.last_contest = None
+            print('now')
             self.extra_context = {
-                'last_contest': self.last_contest
+                'ContestStatus': "1",
+                'message': "暂时没有竞赛",
+                'data': {
+                    'contest_info': {
+                        'title': "去进行虚拟竞赛吧",
+                    },
+                    'url': 'javascript:void(0);'
+                }
             }
         return super().get(request, *args, **kwargs)
 
@@ -88,109 +143,171 @@ class GroupCreateView(TemplateView):
 class ContestView(TemplateView):
     template_name = 'contest/contest.html'
 
+    @method_decorator(login_required(login_url='/accounts/login/'))
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_captain:
+            redirect('/contest/')
+        contest_id = kwargs['contest_id']
+        try:
+            contest = Contest.objects.get(id=contest_id)
+            problems = Problem.objects.filter(contest=contest)
+            print(problems)
+            #grades = Contest.objects.
+            if not contest.group.filter(id=request.user.group.id):
+                redirect('/contest/')
+            self.extra_context={
+                'contest': contest,
+                'problems': problems
+            }
+        except:
+            return Http404()
+        return super().get(request, *args, **kwargs)
+
 
 class Util:
     @staticmethod
-    def send_email(request, msg=''):
+    def send_email(request, msg='null'):
         hm = hashlib.md5((request.user.username+request.user.email).encode('utf8'))
         m = hm.hexdigest()
-        status = send_mail(subject='验证邮箱',
-                           message='激活地址：http://%s/contest/activate/?activate=%s&msg=%s' % (request.get_host(), m, msg),
-                           from_email=EMAIL_FROM,
-                           recipient_list=[request.user.email],
-                           fail_silently=False)
-        return status
+        try:
+            send_mail(subject='验证邮箱',
+                      message='激活队伍地址：http://%s/accounts/activate/?activate=%s&msg=%s' % (request.get_host(), m, msg),
+                      from_email=EMAIL_FROM,
+                      recipient_list=[request.user.email],
+                      )  # fail_silently=False
+            return True
+        except:
+            return False
 
     @staticmethod
     def send_apply(request, captain_email, captain_name):
         hm = hashlib.md5((captain_name + captain_email).encode('utf8'))
         m = hm.hexdigest()
-        status = send_mail(subject='来自用户：%s的申请' % request.user.username,
-                           message='同意点击改地址否则可忽略：http://%s/contest/agree/?activate=%s&msg=%s' % (request.get_host(), m, request.user.username),
-                           from_email=EMAIL_FROM,
-                           recipient_list=[captain_email],
-                           fail_silently=False)
-        return status
+        try:
+            status = send_mail(subject='来自用户：%s的申请' % request.user.username,
+                               message='同意点击该地址，不同意请忽略：http://%s/accounts/agree/?activate=%s&msg=%s' % (request.get_host(), m, request.user.username),
+                               from_email=EMAIL_FROM,
+                               recipient_list=[captain_email],
+                               )   # fail_silently=False
+            return True
+        except:
+            return False
 
 
 # 申请加入竞赛 url：/contest/apply/
 class ApplyContest(View):
     @method_decorator(login_required(login_url='/accounts/login/'))
-    def get(self, request, *args, **kwargs):
-        self.respon = {'message': '申请竞赛成功', 'data': '', 'code': 10000}
-        if request.user.is_captain:
-            request.user.group.is_apply = True
-            request.user.group.save()
-            contest_obj = Contest.objects.all().order_by('-start_time')[0]
-            contest_obj.group.add(request.user.group)
-            contest_obj.save()
-        elif request.user.is_captain is False and request.user.group is not None:
-            self.respon['message'] = '对不起，目前申请参加竞赛只允许队长申请'
-            self.respon['code'] = 10001
+    def post(self, request, *args, **kwargs):
+        self.respon = {'message': '报名成功', "detail": "不要错过比赛哦~", 'data': '', 'code': 10000}
+        if request.user.is_captain and request.user.group is not None:
+            if not request.user.group.is_activate:
+                self.respon['message'] = '您的队伍尚未激活'
+                self.respon['detail'] = '我们将向您的邮箱发送激活信息，请保证您的邮箱是有效的哦\n'
+                self.respon['code'] = 10008
+                self.respon['is_valid_email'] = Util.send_email(request)
+                print(request.user.email)
+            else:
+                contest_id = self.request.POST.get('contest_id')
+                try:
+                    contest = Contest.objects.get(pk=contest_id)
+                except:
+                    self.respon['detail'] = "对不起，没有这场竞赛"
+                    self.respon['message'] = '报名失败'
+                    self.respon['code'] = 10003
+                    return JsonResponse(self.respon)
+                contest.group.add(request.user.group)
+                contest.save()
+                print(contest.group.all())
         elif request.user.group is not None:
-            self.respon['message'] = '对不起您目前还未加入战队，该比赛只能战队参加'
-            self.respon['code'] = 10002
+            self.respon['detail'] = "对不起，目前申请参加竞赛只允许队长申请"
+            self.respon['message'] = '报名失败'
+            self.respon['code'] = 10001
         else:
-            pass
+            self.respon['detail'] = '对不起您目前还未加入战队，是否创建队伍？'
+            self.respon['message'] = '报名失败'
+            self.respon['code'] = 10002
+
+        return JsonResponse(self.respon)
+
+
+class ContestCancel(View):
+    def post(self, request, *args, **kwargs):
+        self.respon = {'message': '未知错误！', 'code': -10009, "detail": "请稍后重试！"}
+        try:
+            contest_id = request.POST.get('contest_id')
+            contest = Contest.objects.get(pk=contest_id)
+            contest.group.remove(request.user.group)
+            self.respon['detail'] = "您已经退出本次比赛"
+            self.respon['message'] = '操作成功'
+            self.respon['code'] = -10000
+        except Exception as e:
+            self.respon['detail'] = str(e)
+        return JsonResponse(self.respon)
+
+
+class ContestApplyCancel(View):
+    @method_decorator(login_required(login_url='/accounts/login/'))
+    def post(self, request, *args, **kwargs):
+        self.respon = {'message': '未知错误！', 'code':-10003, "detail": "请稍后重试！"}
+        if request.user.group is None:
+            self.respon['detail'] = "您似乎并没有加入队伍"
+            self.respon['message'] = '操作失败'
+            self.respon['code'] = -10001
+        else:
+            contest_id = request.POST.get('contest_id')
+            try:
+                contest = Contest.objects.get(pk=contest_id)
+            except Exception as e:
+                self.respon['detail'] = "未知请求出错，请重试"
+                self.respon['message'] = '操作失败'
+                self.respon['code'] = -10009
+                return JsonResponse(self.respon)
+            try:
+                contest.group.remove(request.user.group)
+                self.respon['detail'] = "您已经取消本次报名"
+                self.respon['message'] = '操作成功'
+                self.respon['code'] = -10000
+            except Exception as e:
+                print(e)
+                self.respon['detail'] = "您似乎并未加入此比赛，请重试"
+                self.respon['message'] = '操作失败'
+                self.respon['code'] = -10002
         return JsonResponse(self.respon)
 
 
 # 创建战队 url：/contest/group/
-class CreateGroup(ListView):
-    template_name = 'contest/create-group.html'
+class CreateGroup(View):
+
     @method_decorator(login_required(login_url='/accounts/login/'))
     def post(self, request, *args, **kwargs):
-        form_verify = VerifyCreateGroup(request.POST)
-        self.respon = {'message': '', 'code':10003}
-        if request.user.is_active_email is False and form_verify.is_valid():
-            self.respon['message'] = '您的账户邮箱未激活'
-            self.respon['code'] = 10008
-            request.user.email = request.POST.get('email', '')
-            request.user.save()
-            Util.send_email(request, msg=request.POST.get('name', ''))
-        elif form_verify.is_valid() and request.user.group is None:
-            name = request.POST.get('name', '')
-            introduce = request.POST.get('introduce', '该队伍暂还没有介绍')
-            captain = request.user.username
-            request.user.is_captain = True
-            request.user.save()
-            group_obj = Group(name=name, introduce=introduce, captain=captain, people_num=1)
-            group_obj.save()
-            request.user.group = group_obj
-            request.user.save()
-            self.respon['message'] = '创建队伍成功'
-            self.respon['code'] = 10000
-        else:
-            self.respon['message'] = form_verify.errors
-            self.respon['code'] = 10004
-        return JsonResponse(self.respon)
-
-
-# 激活邮箱 url：/contest/activate
-class ActivateEmail(View):
-    @method_decorator(login_required(login_url='/accounts/login/'))
-    def get(self,request, *args, **kwargs):
-        hm = hashlib.md5()
-        respon = {'message': 'success', 'data': '', 'code': 10000}
-        hm.update((request.user.username + request.user.email).encode('utf8'))
-        if request.GET.get('activate', '') == hm.hexdigest():
-            request.user.is_active_email = True
-            if request.GET.get('msg', '') != '':
-                name = request.GET.get('msg', '')
+        self.respon = {'message': '未知错误！', 'code':10003, "detail": "请稍后重试！"}
+        try:
+            if request.user.group is None:
+                name = request.POST.get('name', '')
                 introduce = request.POST.get('introduce', '该队伍暂还没有介绍')
                 captain = request.user.username
-                request.user.is_captain = True
                 group_obj = Group(name=name, introduce=introduce, captain=captain, people_num=1)
-                group_obj.save()
-                request.user.group = group_obj
-                respon['message'] = '已激活并创建队伍成功'
-                respon['data'] = {'group_name':request.GET.get('msg', '')}
-                respon['code'] = 10000
-            request.user.save()
-            return JsonResponse(respon)
-        respon['message'] = 'fail'
-        respon['code'] = 10007
-        return JsonResponse(respon)
+                if Util.send_email(request):
+                    print(request.user.email)
+                    group_obj.save()
+                    request.user.is_captain = True
+                    request.user.group = group_obj
+                    request.user.save()
+                    self.respon['message'] = '请前往邮箱激活队伍'
+                    self.respon['detail'] = "为了保证后续队员加入，请先去邮箱激活您的队伍~"
+                    self.respon['code'] = 10000
+                else:
+                    self.respon['message'] = '发送邮件失败了'
+                    self.respon['detail'] = "您的邮箱似乎不对哦~"
+                    self.respon['code'] = 10009
+            else:
+                self.respon['message'] = "您已经加入队伍！"
+                self.respon['message'] = "可以进行报名了~"
+                self.respon['code'] = 10004
+        except Exception as e:
+            print(self.respon, e)
+        return JsonResponse(self.respon)
+
 
 
 # 申请加入队伍 url：/contest/apply_group/?name=group_name
@@ -308,7 +425,11 @@ class ContestProblemView(ListView):
 
 
 class ContestProblemDetailView(DetailView):
-    pass
+    template_name = 'contest/problem-detail.html'
+    context_object_name = 'problem'
+    queryset = Problem.objects.all()
+    pk_url_kwarg = 'problem_id'
+
 
 
 class ContestPreviousView(ListView):
@@ -322,6 +443,39 @@ class ContestPreviousView(ListView):
 
 class ContestDetailView(TemplateView):
     template_name = 'contest/detail.html'
+
+    def _get_start_time(self):
+        duration = self.contest.start_time - datetime.datetime.now()
+        day = duration.days
+        second = duration.seconds
+        hour = second // 3600
+        minite = second % 3600 // 60
+        second = second % 60
+        return day, hour, minite, second
+
+    def get(self, request, *args, **kwargs):
+        contest_id = kwargs.get('contest_id')
+        print(kwargs)
+        print(self.kwargs)
+        self.contest = Contest.objects.get(pk=contest_id)
+        is_apply = False
+        if request.user.is_authenticated:
+            if request.user.group is None:
+                is_apply = False
+            else:
+                try:
+                    self.contest.group.get(pk=request.user.group.id)
+                    is_apply = True
+                except:
+                    is_apply = False
+        self.extra_context = {
+            'contest': self.contest,
+            'time': self._get_start_time(),
+            'timestamp': time.mktime(self.contest.start_time.timetuple()),
+            'is_apply': is_apply
+        }
+        return super().get(request, *args, **kwargs)
+
 
 
 class VirtualRandomView(View):

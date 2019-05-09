@@ -1,0 +1,140 @@
+{% extends 'basic/base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>{{ problem.title }}</title>
+    <link rel="stylesheet" href="/static/css/problem_detail.css">
+{% endblock %}
+{% block main %}
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-7">
+{#    <div>#}
+{#      <nav class="navbar navbar-default">#}
+{#        <div class="container-fluid">#}
+{#          <div class="navbar-header">#}
+{#            <h1 class="navbar-brand" href="#">#}
+{#                {{ problem.id }}.{{ problem.title }}#}
+{#            </h1>#}
+{#          </div>#}
+{#        </div>#}
+{#      </nav>#}
+{#    </div>#}
+    <div class="page-header">
+        <p hidden class="data-problem-id" data-problem-id="{{ problem.id }}"></p>
+        <h1>{{ problem.id }}.{{ problem.title }}</h1>
+    </div>
+    <div>
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active problem-module-li problem-description-li"><a href="" class="problem-description-et">问题描述</a></li>
+        <li role="presentation" class="problem-module-li problem-solution-li"><a href="javascript:void(0);" class="problem-solution-et">解决方案</a></li>
+        <li role="presentation" class="problem-module-li problem-comments-li"><a href="javascript:void(0);" class="problem-comments-et">问题讨论</a></li>
+        <li role="presentation" class="problem-module-li problem-submissions-li"><a href="javascript:void(0);" class="problem-submissions-et">提交记录</a></li>
+      </ul>
+    </div>
+    <div class="problem-container">
+        <div class="problem-description">
+        <div class="panel panel-info">
+          <div class="panel-heading">问题描述</div>
+          <div class="panel-body">
+            {{ problem.content }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输入</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.in_description }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输出</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.out_description }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输入样例</h3>
+          </div>
+          <div class="panel-body">
+            <pre>{{ problem.in_case }}</pre>
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">输出样例</h3>
+          </div>
+          <div class="panel-body">
+            <pre>{{ problem.out_case }}</pre>
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">提示</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.tip }}
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">来源</h3>
+          </div>
+          <div class="panel-body">
+            {{ problem.source }}
+          </div>
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-9"><h3 class="panel-title code-header">Code</h3></div>
+                  <!-- Split button -->
+                <!-- Single button -->
+              <div class="col-md-3">
+                <div class="btn-group code-language-type">
+                  <button type="button" class="btn btn-default selected-language">C++</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="javascript:void(0);" class="select-language" >C++</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">C</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">Java</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">C#</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">Golang</a></li>
+                    <li><a href="javascript:void(0);" class="select-language">Python</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <form role="form" class="code-form" action="">{% csrf_token %}
+              <div class="form-group">
+                <textarea data-problemId="{{ problem.id }}" class="form-control code-editor" rows="25"></textarea>
+                <h3 class="commit-result"></h3>
+                <button class="btn btn-primary code-submit" type="button">提交</button>
+            </div>
+            </form>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+  <div class="col-md-2"></div>
+  <div class="col-md-1"></div>
+</div>
+
+
+{% endblock %}
+
+{% block bottom %}
+    <script src="https://www.imooc.com/static/lib/jquery/1.9.1/jquery.js"></script>
+    <script src="{% static 'js/problems.js' %}"></script>
+    <script src="{% static 'js/problem_detail.js' %}"></script>
+{% endblock %}`

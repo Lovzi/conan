@@ -1,3 +1,5 @@
+import hashlib
+
 from django.contrib import auth
 from django.contrib.auth import REDIRECT_FIELD_NAME, logout
 from django.contrib.auth.decorators import login_required
@@ -13,7 +15,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, RedirectView, TemplateView
 
 from accounts.forms import RegisterForm, LoginForm
-from common.models import User
+from common.models import User, Group
 
 
 class LoginView(FormView):
@@ -108,6 +110,20 @@ class ProfileUpdateView(View):
         return JsonResponse(res)
 
 
+# 激活邮箱 url：/contest/activate
+class ActivateEmail(View):
+    @method_decorator(login_required(login_url='/accounts/login/'))
+    def get(self,request, *args, **kwargs):
+        hm = hashlib.md5()
+        respon = {'message': 'success', 'data': '', 'code': 10000}
+        hm.update((request.user.username + request.user.email).encode('utf8'))
+        if request.GET.get('activate', '') == hm.hexdigest():
+            request.user.group.is_activate = True
+            request.user.group.save()
+            return JsonResponse(respon)
+        respon['message'] = 'fail'
+        respon['code'] = 10007
+        return JsonResponse(respon)
 
 
 

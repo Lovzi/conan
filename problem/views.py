@@ -33,7 +33,7 @@ class ProblemListView(ListView):
             commit_num = ProblemCommitRecord.objects.filter(problem=problem).count()
             if commit_num:
                 ac_num = ProblemCommitRecord.objects.filter(problem=problem, result="Accepted").count()
-                problem.ac = ac_num / commit_num
+                problem.ac = float('%.2f' % (ac_num / commit_num * 100))
             else:
                 problem.ac = 0
         content['paginator'] = paginator
@@ -54,12 +54,12 @@ class AnswerView(View):
         problem_id = self.request.POST.get('problem_id')
         problem_obj = Problem.objects.get(pk=problem_id)
         language = self.kwargs.get('language')
-        commit = ProblemCommitRecord(code=code,pid=problem_id, uid=request.user.id, language=language)
+        commit = ProblemCommitRecord(code=code,problem=problem_obj, user=request.user, language=language)
         commit.save()
         serialzer_data = {
             'code': code,
-            'problem_id': commit.pid,
-            'user_id': commit.uid,
+            'problem_id': commit.problem.id,
+            'user_id': commit.user.id,
             'solution_id': commit.id,
             'created_time': datetime.strftime(commit.created_time, '%Y-%m-%d %H-%M-%S'),
             'time_limited': problem_obj.time_limited,

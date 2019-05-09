@@ -70,6 +70,12 @@ a:hover{
     color: white;
     font-size: 14px;
 }
+.cancel-btn{
+    border: none;
+    background: #d9534f;
+    color: white;
+    font-size: 14px;
+}
 .notice-btn{
     margin-top: 10px ;
     font-size: 15px;

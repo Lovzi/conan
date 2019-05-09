@@ -4,27 +4,22 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/ct-index.css' %}">
 {% endblock %}
 {% block main %}
-<div class="jumbotron">
-    <h1>LetCode</h1>
-    <p>在letcode， 参加letcode模拟竞赛，以期在未来的世界舞台绽放光彩！！！</p>
+{#<div class="jumbotron">#}
+{#    <h1>LetCode</h1>#}
+{#    <p>在letcode， 参加letcode模拟竞赛，以期在未来的世界舞台绽放光彩！！！</p>#}
 {#  <div class="profile-top container">#}
 {#  </div>#}
-</div>
+{#</div>#}
 <div class="row contest-dis">
     <div class="col-md-3"></div>
     <div class="col-md-4 contest-module">
-        <div class="real-con-mo">
-            {% if last_contest %}
-                <h2 class="contest-module-title">参加这场{{ hours }}小时{{ minutes }}分钟的比赛</h2>
-                <h3>{{ last_contest.contest_name }}</h3>
-                <span>{{ last_contest.start_time }}
-                    ~
-                    {{ last_contest.end_time }}</span>
-            {% else %}
-                <p class="contest-tip">暂时没有比赛哦</p>
-                <h2 class="contest-module-title">去模拟往期竞赛吧</h2>
-            {% endif %}
+        <a class="st-contest" href="{{ data.url }}">
+            <div class="real-con-mo">
+            <h3 class="contest-tip">{{ message }}</h3>
+            <h2 class="contest-module-title">{{ data.contest_info.title }}</h2>
+            <span>{{ data.contest_info.time }}</span>
         </div>
+        </a>
     </div>
     <div class="col-md-2 vir-ct-mod">
         <a class="vir-ct-link">

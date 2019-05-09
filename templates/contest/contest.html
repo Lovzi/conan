@@ -9,7 +9,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <div class="rt-ct-idx"><a href="/contest/"><i></i> &nbsp;返回竞赛主页</a></div>
-            <div class="title">第130场周赛</div>
+            <div class="title">{{ contest.title }}</div>
             <div class="panel panel-default">
                 <div class="panel-title start-time-panel">
                     <div class="start-time">本场竞赛已经开始，还剩余 1 小时 22 分 15 秒 结束</div>
@@ -19,13 +19,15 @@
         <div class="col-md-1"></div>
     </div>
     <div class="row">
-        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            <div hidden class="contest-id" data-contest-id="{{ contest.id }}"></div>
+        </div>
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-8">
                     <div class="content">
                         <div class="content-title">
-                            <h3 class="text-300">欢迎来到第130场周赛</h3>
+                            <h3 class="text-300">欢迎来到{{ contest.title }}</h3>
                         </div>
                         <div class="contest-tip">
                            <h4 class="text-200">重要提示</h4>
@@ -38,6 +40,9 @@
                                     参赛资格被取消 以及 至少三周的账号冻结 。
                                     力扣一向非常重视竞赛的公平，为了保障每一位用户的权益，
                                     我们会坚持以 零容忍 的态度维护竞赛的公平、公正
+                                </li>
+                                <li class="ct-rule">
+                                    {{ contest.description }}
                                 </li>
                             </ol>
                             <br>
@@ -67,22 +72,12 @@
                         <span  data-toggle="tooltip"></span>
                         <span class="pull-right">得分&nbsp;</span>
                     </li>
-                    <li class="list-group-item">
-                        <a>K 次取反后最大化的数组和</a>
-                        <span class="badge">4</span>
-                    </li>
-                    <li class="list-group-item">
-                        <a>笨阶乘</a>
-                        <span class="badge">4</span>
-                    </li>
-                    <li class="list-group-item">
-                        <a>行相等的最少多米诺旋转</a>
-                        <span class="badge">4</span>
-                    </li>
-                    <li class="list-group-item">
-                        <a>先序遍历构造二叉树</a>
-                        <span class="badge">4</span>
-                    </li>
+                    {% for problem in problems %}
+                        <li class="list-group-item">
+                            <a href="/contest/{{ contest.id }}/problems/{{ problem.id }}/">{{ problem.title }}</a>
+                            <span class="badge">10</span>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="col-md-6 rank-lt-ctr">
@@ -140,4 +135,45 @@
         </div>
         <div class="col-md-1"></div>
     </div>
+{% endblock %}
+{% block bottom %}
+        <script>
+        $(function () {
+            function exitContest(that) {
+                let url = '/contest/cancel/'
+                let contestId = $('.contest-id').data('contest-id')
+                $.post(url, {contest_id: contestId}, function (res) {
+                    if(res.code === -10000){
+                        swal({
+                              title: res.message,
+                              text: res.detail,
+                              icon: "info",
+                        });
+                        window.location.href="/contest/"
+                    }else{
+                        swal({
+                              title: res.message,
+                              text: res.detail,
+                              icon: "error",
+                        });
+                    }
+                })
+
+            }
+
+            $('body').on('click', '.exit-btn', function (e) {
+               let that = $(this)
+               swal({
+                  title: "操作提醒",
+                  text: "放弃比赛将无法获得成绩",
+                  icon: "warning",
+                  buttons: ["取消", "确认"],
+               }).then(isEntry => {
+                    if(isEntry){
+                        exitContest(that);
+                    }
+               });
+            })
+        })
+    </script>
 {% endblock %}
