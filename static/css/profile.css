@@ -18,6 +18,7 @@
 }
 .profile-panel{
     margin-top: -80px;
+    height: 500px;
     box-shadow:0 0 1px 1px #eee;
     background-color: #fff;
 }
@@ -31,4 +32,34 @@
     margin-right: 20px;
     /*border-top: 0;*/
     /*border: 0 solid transparent !important;*/
+}
+.no-group-tip{
+    display: block;
+    float: left;
+    margin-left: 20%;
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 20%;
+
+}
+.apply-group-btn{
+    border: none;
+    background: rgb(48, 133, 214);
+    color: white;
+    float: left;
+    padding: 10px;
+    border-radius: 5px  ;
+    margin-top: 19.2%;
+    font-size: 18px;
+}
+.create-group-btn{
+    border: none;
+    background: rgb(48, 133, 214);
+    color: white;
+    float: left;
+    padding: 10px;
+    margin-left: 20px;
+    border-radius: 5px  ;
+    margin-top: 19.2%;
+    font-size: 18px;
 }

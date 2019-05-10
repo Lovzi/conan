@@ -5,6 +5,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.http import is_safe_url
@@ -12,7 +13,7 @@ from django.views import View
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic import FormView, RedirectView, TemplateView
+from django.views.generic import FormView, RedirectView, TemplateView, DetailView
 
 from accounts.forms import RegisterForm, LoginForm
 from common.models import User, Group
@@ -87,6 +88,21 @@ class LogoutView(RedirectView):
 class ProfileView(TemplateView):
     template_name = 'accounts/profile.html'
 
+
+class ProfileLoadView(View):
+    modules = {
+        'b': 'accounts/basic.html',
+        'a': 'accounts/accounts.html',
+        'g': 'accounts/group.html',
+        'c': 'accounts/contest.html',
+        'r': 'accounts/record.html'
+    }
+
+    def post(self, request, *args, **kwargs):
+        module = request.POST.get('module')
+        if not module:
+            module = 'b'
+        return render(request, self.modules[module])
 
 class ProfileUpdateView(View):
     def post(self, request, *args, **kwargs):

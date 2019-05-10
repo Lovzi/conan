@@ -1,0 +1,37 @@
+{% if user.group %}
+    <div class="profile-panel panel panel-default">
+      <!-- Default panel contents -->
+        <h4 class="panel-heading profile-panel-header personal-info" style="background-color: #fff">队伍信息</h4>
+        <table class="table">
+            <tr class="row profile-row">
+                <td class="col-md-2">队伍名称</td>
+                <td class="col-md-9 td-profile-nickname">{{ user.group.username }}</td>
+                <td class="col-md-1"><a class="profile-editor" href="#" data-field="nickname">编辑</a></td>
+            </tr>
+            <tr class="row profile-row">
+                <td class="col-md-2">队伍负责人</td>
+                <td class="col-md-9 td-profile-sex">{{ user.group.captain }}</td>
+                <td class="col-md-1"><a class="profile-editor" href="#" data-field="sex">编辑</a></td>
+            </tr>
+            <tr class="row profile-row">
+                <td class="col-md-2">队伍介绍</td>
+                <td class="col-md-9 td-profile-birthday">{{ user.group.introduce }}</td>
+                <td class="col-md-1"><a class="profile-editor" href="#" data-field="birthday">编辑</a></td>
+            </tr>
+        </table>
+        <h4 class="panel-heading profile-panel-header" style="background-color: #fff">斩获佳绩</h4>
+        <table class="table">
+            <tr class="row profile-row">
+                <td class="col-md-2">荣誉</td>
+                <td class="col-md-10">该队伍暂时还没有荣誉</td>
+            </tr>
+        </table>
+      </div>
+{% else %}
+    <div class="profile-panel panel panel-default">
+      <!-- Default panel contents -->
+        <span class="no-group-tip">您还没有加入队伍,是否立即加入？</span>
+        <button class="apply-group-btn">现在加入</button>
+{#        <button class="create-group-btn">创建队伍</button>#}
+    </div>
+{% endif %}

@@ -69,41 +69,40 @@ $().ready(function () {
         let commentContent = textArea.val();
         let problemId = $('.data-problem-id').data('problem-id');
     });
-    // $('.problem-container').on('click', '.submit-comment', function (event) {
-    //
-    //     let obj = $(this)
-    //     if(obj.data('type') !== 'master'){
-    //         let commentObj = obj.parents('.singer-comment-container');
-    //         var repliedId = commentObj.data('replied-id')
-    //         var parentCommentId = commentObj.data('parent-comment-id');
-    //     }
-    //     let textArea = obj.prev();
-    //     //alert(document.cookie)
-    //     //if(document.cookie.indexOf('sessionid') !== -1)
-    //     let problemId = $('.data-problem-id').data('problem-id');
-    //     let userId = $('.user-id').data('user-id');
-    //     if(userId !== 'None'){
-    //         let commentComtent = textArea.val();
-    //         alert(commentComtent)
-    //         if(commentComtent === ""){
-    //             alert('评论不能为空')
-    //         }
-    //         else{
-    //             url = '/problems/' + problemId + '/comments/'
-    //             $.post(
-    //                 url,
-    //                 {'comment': commentComtent , 'problem_id': problemId, 'user_id': userId, 'replied_id':　repliedId, 'parent_comment_id': parentCommentId},
-    //                 function(res) {
-    //                     $('.problem-container').html(res['content'])
-    //             })
-    //         }
-    //     }else{
-    //         alert('请先登录')
-    //     }
-    // });
-    // $('.problem-container').on('click', 'submit-comment', function (event) {
-    //
-    // });
+    $('.problem-container').on('click', '.submit-comment', function (event) {
+
+        let obj = $(this)
+        if(obj.data('type') !== 'master'){
+            let commentObj = obj.parents('.singer-comment-container');
+            var repliedId = commentObj.data('replied-id')
+            var parentCommentId = commentObj.data('parent-comment-id');
+        }
+        let textArea = obj.prev();
+        //alert(document.cookie)
+        //if(document.cookie.indexOf('sessionid') !== -1)
+        let problemId = $('.data-problem-id').data('problem-id');
+        let userId = $('.user-id').data('user-id');
+        if(userId !== 'None'){
+            let commentComtent = textArea.val();
+            if(commentComtent === ""){
+                swal('评论失败', "评论不能为空", 'error')
+            }
+            else{
+                url = '/problems/' + problemId + '/comments/'
+                $.post(
+                    url,
+                    {'comment': commentComtent , 'problem_id': problemId, 'user_id': userId, 'replied_id':　repliedId, 'parent_comment_id': parentCommentId},
+                    function(res) {
+                        $('.problem-container').html(res['content'])
+                })
+            }
+        }else{
+            swal('请先登录', "", 'error')
+        }
+    });
+    $('.problem-container').on('click', 'submit-comment', function (event) {
+
+    });
 
     $('.problem-container').on('click', '.code-submit', function () {
         let editor = $('.code-editor');

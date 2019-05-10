@@ -18,48 +18,44 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="comment-body">{{ comment.body }}</div>
+                    <div class="comment-body">{{ comment.content }}</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-primary problem-comment-star">点赞:{{ comment.star }}</button>
-                    <button class="btn btn-primary reply-cls-btn" data-parent-comment-id="">回复</button>
+                    <a href="javascript:void(0);" class="problem-comment-star">点赞:{{ comment.star }}</a>
+                    <a href="javascript:void(0);" style="padding-left: 10px" class="reply-cls-btn" data-parent-comment-id="">回复</a>
                 </div>
             </div>
             <div class="row ">
                 <div class="col-md-12 reply-input-container-{{ comment.id }}">
-                     sdfdf
                 </div>
             </div>
             <div class="children-comments">
                 {% for c in comment.children_comments.all %}
-                    <div class="row singer-comment-container" id="{{ c.id }}" data-parent-comment-id="{{ comment.id }}" data-star="{{ comment.star }}" data-replied-id="{{ comment.author.id }}" >
-                        <div class="col-md-1"></div>
-                        <div class="col-md-11">
+                    <div class="singer-comment-container" id="{{ c.id }}" data-parent-comment-id="{{ comment.id }}" data-star="{{ comment.star }}" data-replied-id="{{ comment.author.id }}" >
+                        <div class="children-ctr">
                             <div class="row">
                                 <div class="col-md-12">
                                     <img class="comment-mugshot" src="{{ c.author.mugshot }}">
-                                    <p class="comment-username">{{ c.author.username }}</p>
+                                    <span class="comment-username">{{ c.author.username }}&nbsp;回复</span>
+                                    <span class="comment-username">{{ c.reply.username }}</span>
                                     <p class="comment-created-time">{{ c.created_time }}</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="comment-body">{{ c.body }}</div>
+                                    <div class="comment-body">{{ c.content }}</div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button class="btn btn-primary problem-comment-btn">点赞:<span class="problem-star-{{ c.id }}">{{ c.star }}</span></button>
-                                    <button class="btn btn-primary reply-cls-btn" data-parent-comment-id="">回复</button>
-                                    <button class="btn btn-primary">分享</button>
-                                    <button class="btn btn-primary" >举报</button>
+                                    <a href="javascript:void(0);" class="problem-comment-btn">点赞:<span class="problem-star-{{ c.id }}">{{ c.star }}</span></a>
+                                    <a href="javascript:void(0);" style="padding-left: 10px" class="reply-cls-btn" data-parent-comment-id="">回复</a>
                                 </div>
                             </div>
                             <div class="row ">
                                 <div class="col-md-12 reply-input-container-{{ c.id }}">
-                                     sdfdf
                                 </div>
                             </div>
                         </div>

@@ -21,7 +21,10 @@ class ContestIndexView(TemplateView):
     template_name = 'contest/index.html'
 
     def is_apply(self, request):
-        group_id = request.user.group.id
+        if request.user.group is not None:
+            group_id = request.user.group.id
+        else:
+            return False
         if self.last_contest is not None \
                 and self.last_contest.group.filter(id=group_id):
                 return True
@@ -33,12 +36,22 @@ class ContestIndexView(TemplateView):
         format_str += " ~ " + datetime.datetime.strftime(self.last_contest.end_time,
                                                 '%H:%M')
         return format_str
+
+    def _get_duration(self, contest):
+        duration = contest.end_time - contest.start_time
+        hours = duration.seconds // 3600
+        minutes = duration.seconds % 3600 // 60
+        return {'hour': hours, 'minute': minutes}
+
     @method_decorator(login_required(login_url='/accounts/login/'))
     def get(self, request, *args, **kwargs):
 
         object_list = Contest.objects.all().order_by('start_time')
         if len(object_list):
             self.last_contest = object_list[len(object_list) - 1]
+            self.ohter_contest = object_list[:len(object_list) - 1]
+            for contest in self.ohter_contest:
+                contest.duration = self._get_duration(contest)
             status = self.last_contest.status
             # 申请竞赛中
             if status == ContestStatus.CONTEST_APPLYING:
@@ -122,7 +135,6 @@ class ContestIndexView(TemplateView):
                     }
                 }
         else:
-            print('now')
             self.extra_context = {
                 'ContestStatus': "1",
                 'message': "暂时没有竞赛",
@@ -133,6 +145,7 @@ class ContestIndexView(TemplateView):
                     'url': 'javascript:void(0);'
                 }
             }
+        self.extra_context['contests'] = self.ohter_contest
         return super().get(request, *args, **kwargs)
 
 
@@ -284,6 +297,11 @@ class CreateGroup(View):
         try:
             if request.user.group is None:
                 name = request.POST.get('name', '')
+                if Group.objects.filter(name=name):
+                    self.respon['message'] = '创建队伍失败'
+                    self.respon['detail'] = "队伍名已存在！"
+                    self.respon['code'] = 10008
+                    return JsonResponse(self.respon)
                 introduce = request.POST.get('introduce', '该队伍暂还没有介绍')
                 captain = request.user.username
                 group_obj = Group(name=name, introduce=introduce, captain=captain, people_num=1)
@@ -293,7 +311,7 @@ class CreateGroup(View):
                     request.user.is_captain = True
                     request.user.group = group_obj
                     request.user.save()
-                    self.respon['message'] = '请前往邮箱激活队伍'
+                    self.respon['message'] = '创建队伍成功！'
                     self.respon['detail'] = "为了保证后续队员加入，请先去邮箱激活您的队伍~"
                     self.respon['code'] = 10000
                 else:
@@ -311,34 +329,42 @@ class CreateGroup(View):
 
 
 # 申请加入队伍 url：/contest/apply_group/?name=group_name
-class ApplyAddGroup(ListView):
+class ApplyAddGroup(View):
 
     @method_decorator(login_required(login_url='/accounts/login/'))
-    def get(self, request, *args, **kwargs):
-        respon = {'message': 'success', 'data': '', 'code': 10000}
-        group_name = request.GET.get('name', '')
-        group_obj = Group.objects.get(name=group_name)
-        self.status = ''
-        if group_name == '':
-            respon['message'] = '您的输入不合法'
-            respon['code'] = 10011
-        elif group_obj is None:
-            respon['message'] = '您输入的队伍不存在'
+    def post(self, request, *args, **kwargs):
+        respon = {'message': 'success', 'detail': '', 'code': 10000}
+        group_name = request.POST.get('name', '')
+        self.status = False
+        try:
+            group_obj = Group.objects.get(name=group_name)
+        except:
+            respon['message'] = "申请失败"
+            respon['detail'] = '您输入的队伍不存在'
             respon['code'] = 10012
+            return JsonResponse(respon)
+        if group_name == '':
+            respon['message'] = "申请失败"
+            respon['detail'] = '您的输入不合法'
+            respon['code'] = 10011
         elif request.user.group is not None:
-            respon['message'] = '您已经有队伍了'
+            respon['message'] = "申请失败"
+            respon['detail'] = '您已经有队伍了'
             respon['code'] = 10019
         else:
             for i in group_obj.users.all():
                 if i.is_captain:
                     self.status = Util.send_apply(request, captain_email=i.email, captain_name=i.username)
                     break
-            if not self.status:
-                respon['message'] = '申请失败，请再次尝试'
-                respon['code'] = 10013
-            else:
-                respon['message'] = 'success'
-                respon['code'] = 10000
+            respon['message'] = "申请已被提交"
+            respon['detail'] = '您的申请已通知该队伍队长，请耐心等待'
+            respon['code'] = 10000
+            # if not self.status:
+            #     respon['message'] = '申请失败，请再次尝试'
+            #     respon['code'] = 10013
+            # else:
+            #     respon['message'] = 'success'
+            #     respon['code'] = 10000
         return JsonResponse(respon)
 
 

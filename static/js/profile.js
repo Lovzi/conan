@@ -1,5 +1,48 @@
 $(function () {
-    $('.profile-panel').on('click', '.profile-editor', function () {
+    $('body').on('click', '.profile-nav', function (e) {
+        let that = $(this)
+        that.parent().children().removeClass('active')
+        that.addClass('active')
+        let module = $(this).data('m')
+        let url = '/accounts/profile/modules/'
+        $.post(url, {module: module}, function (res) {
+            $('.profile-ctr').html(res)
+        })
+    })
+})
+
+$(function () {
+    $('body').on('click', '.apply-group-btn', function (e) {
+        swal({
+            text: '请输入你想加入的队伍',
+            content: "input",
+            button: {
+                text: "创建",
+                closeModal: false,
+            },
+        }).then(name => {
+            if (!name) throw null;
+            let url = "/contest/apply_group/";
+            $.post(url, {name: name}, function (res) {
+                if (res.code === 10000) {
+                    swal(res.message, res.detail, "success")
+                }else{
+                    swal(res.message, res.detail, "error")
+                }
+            })
+        }).catch(err => {
+          if (err) {
+            swal("啊哦。。。", "服务器走丢了。。。", "error");
+          } else {
+            swal.stopLoading();
+            swal.close();
+          }
+        });
+    })
+})
+
+$(function () {
+    $('.profile-ctr').on('click', '.profile-editor', function () {
         $(this).toggleClass('profile-editor')
         let field = $(this).data('field');
         let fieldClass = '.td-profile-' + field
@@ -35,14 +78,14 @@ $(function () {
         swal('')
     })
 
-    $('.profile-panel').on('click', '.edit-cancel', function () {
+    $('.profile-ctr').on('click', '.edit-cancel', function () {
         let initValue = $('.profile-text-input').data('initial');
         let field = $('.profile-update-group').data('field');
         let fieldClass = '.td-profile-' + field;
         $(fieldClass).html(initValue)
         $(fieldClass).next().children().toggleClass('profile-editor')
     });
-    $('.profile-panel').on('click', '.profile-edit-submit', function () {
+    $('.profile-ctr').on('click', '.profile-edit-submit', function () {
         let field = $('.profile-update-group').data('field');
         let updateValue = $('.profile-text-input').val();
         let fieldClass = '.td-profile-' + field;

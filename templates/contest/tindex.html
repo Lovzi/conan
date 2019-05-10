@@ -1,0 +1,32 @@
+{% extends 'basic/base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ct-index.css' %}">
+{% endblock %}
+{% block main %}
+{#<div class="jumbotron">#}
+{#    <h1>LetCode</h1>#}
+{#    <p>在letcode， 参加letcode模拟竞赛，以期在未来的世界舞台绽放光彩！！！</p>#}
+{#  <div class="profile-top container">#}
+{#  </div>#}
+{#</div>#}
+
+<div class="row" style="margin-top: 200px">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 contest-module">
+        <a class="st-contest" href="{{ data.url }}">
+            <div class="real-con-mo">
+            <h3 class="contest-tip">{{ message }}</h3>
+            <h2 class="contest-module-title">{{ data.contest_info.title }}</h2>
+            <span>{{ data.contest_info.time }}</span>
+        </div>
+        </a>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+{% endblock %}
+
+{% block bottom %}
+    <script src="{% static 'js/contests.js' %}"></script>
+{% endblock %}

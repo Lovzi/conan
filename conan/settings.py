@@ -149,12 +149,12 @@ USE_L10N = True
 
 AUTH_USER_MODEL = 'common.User'
 
-EMAIL_HOST = 'smtp.163.com'
+EMAIL_HOST = 'smtp.yeah.net'
 EMAIL_PORT = 25
-EMAIL_HOST_USER = 'jimaoxu@163.com'
-EMAIL_HOST_PASSWORD = 'youxiang123'
+EMAIL_HOST_USER = 'traceback@yeah.net'
+EMAIL_HOST_PASSWORD = 'Wu591833'
 EMAIL_USE_TLS = False
-EMAIL_FROM = 'jimaoxu@163.com'
+EMAIL_FROM = 'traceback@yeah.net'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

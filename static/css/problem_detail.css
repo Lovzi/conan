@@ -1,6 +1,9 @@
 .code-language-type{
     float: right;
 }
+a:hover{
+    text-decoration: none;
+}
 .code-language-type ul{
     min-width: 90px;
 }
@@ -30,5 +33,13 @@
 }
 .comment-body{
     padding-bottom: 1em;
+    margin-left: 15px;
 
+}
+.children-ctr{
+    width: 97%;
+    margin-left: 3%;
+}
+.singer-comment-container{
+    margin-top: 15px;
 }

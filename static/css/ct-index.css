@@ -97,6 +97,7 @@ body{
     line-height: 25px;
 }
 .virtual-btn{
+    padding: 3px;
     border: none;
     background: #2d8cf0;
     color: white;

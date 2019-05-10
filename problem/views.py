@@ -110,7 +110,7 @@ class ProblemCommentView(ListView):
         if not comment_body:
             return HttpResponseBadRequest('评论不能为空')
         comment = ProblemComment()
-        comment.body = comment_body
+        comment.content = comment_body
         comment.problem = Problem(id=self.request.POST.get('problem_id'))
         comment.author = self.request.user
         print(request.POST.get('parent_comment_id'))
@@ -118,7 +118,7 @@ class ProblemCommentView(ListView):
             reply = User(id=request.POST.get('replied_id'))
             comment.reply = reply
             comment.parent_comment = ProblemComment(id=request.POST.get('parent_comment_id'))
-            comment.is_problem_comment = False
+            comment.is_parent_comment = False
         comment.save()
         self.object_list = self.get_queryset()
         context = self.get_context_data()
@@ -142,9 +142,9 @@ class ProblemCommentView(ListView):
         return JsonResponse(data)
 
     def get_queryset(self):
-        queryset = super().get_queryset()
         self.problem = Problem(id=self.kwargs.get('id'))
-        return queryset.filter(problem=self.problem).all()
+        return super().get_queryset().filter(
+            problem=self.problem, is_parent_comment=True)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         content = super().get_context_data()
