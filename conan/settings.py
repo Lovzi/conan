@@ -149,12 +149,12 @@ USE_L10N = True
 
 AUTH_USER_MODEL = 'common.User'
 
-EMAIL_HOST = 'smtp.yeah.net'
-EMAIL_PORT = 25
-EMAIL_HOST_USER = 'traceback@yeah.net'
-EMAIL_HOST_PASSWORD = 'Wu591833'
-EMAIL_USE_TLS = False
-EMAIL_FROM = 'traceback@yeah.net'
+EMAIL_HOST = "smtp.yeah.net"   # 服务器
+EMAIL_PORT = 25               # 一般情况下都为25
+EMAIL_HOST_USER = "traceback@yeah.net"   # 账号
+EMAIL_HOST_PASSWORD = "Wu591833"  # 密码
+EMAIL_USE_TLS = False             # 一般都为False
+EMAIL_FROM = "traceback@yeah.net"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

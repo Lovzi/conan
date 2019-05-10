@@ -293,7 +293,8 @@ class CreateGroup(View):
 
     @method_decorator(login_required(login_url='/accounts/login/'))
     def post(self, request, *args, **kwargs):
-        self.respon = {'message': '未知错误！', 'code':10003, "detail": "请稍后重试！"}
+        print ('****************')
+        self.respon = {'message': '未知错误！', 'code': 10003, "detail": "请稍后重试！"}
         try:
             if request.user.group is None:
                 name = request.POST.get('name', '')
